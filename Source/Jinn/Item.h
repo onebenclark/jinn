@@ -26,6 +26,12 @@ public:
 	UItem();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString DisplayName;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FString Description;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	EItemType Type;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

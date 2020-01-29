@@ -29,7 +29,7 @@ protected:
 	USpringArmComponent* CameraSpringArm;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<UItem*, int> Inventory;
+	TMap<TSubclassOf<class UItem>, int> Inventory;
 
 public:	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
