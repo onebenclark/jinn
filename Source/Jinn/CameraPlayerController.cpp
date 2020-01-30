@@ -57,12 +57,14 @@ void ACameraPlayerController::MoveRight(float Value)
 
 void ACameraPlayerController::PitchCamera(float Value)
 {
-	Pawn->CameraInput.Y = FMath::Clamp<float>(Value, -1.0f, 1.0f);
+	if (!MenuPause) Pawn->CameraInput.Y = FMath::Clamp<float>(Value, -1.0f, 1.0f);
+	else Pawn->CameraInput.Y = 0.0f;
 }
 
 void ACameraPlayerController::YawCamera(float Value)
 {
-	Pawn->CameraInput.X = Value;
+	if (!MenuPause) Pawn->CameraInput.X = Value;
+	else Pawn->CameraInput.X = 0.0f;
 }
 
 void ACameraPlayerController::CyclePartyMember()
@@ -90,15 +92,15 @@ void ACameraPlayerController::Space()
 	AWorldSettings* worldSettings = GetWorldSettings();
 	//Time Dilation is set to 0.0 globally excluding the CameraPawn to create a pause where the
 	//player can input orders and such.
-	if (!ActionPause)
+	if (!MenuPause)
 	{
-		ActionPause = true;
+		MenuPause = true;
 		worldSettings->SetTimeDilation(0.0f);
 		Pawn->CustomTimeDilation = 1.0f;
 	}
 	else
 	{
-		ActionPause = false;
+		MenuPause = false;
 		worldSettings->SetTimeDilation(1.0f);
 	}
 }

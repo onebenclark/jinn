@@ -42,4 +42,6 @@ protected:
 public:
 	UPROPERTY(BlueprintReadOnly)
 	bool ActionPause;
+	UPROPERTY(BlueprintReadOnly)
+	bool MenuPause;
 };
