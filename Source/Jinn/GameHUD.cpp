@@ -43,3 +43,16 @@ void AGameHUD::SetPartyIndex(int index)
 {
 	PartyWidget->PartyIndex = index;
 }
+
+void AGameHUD::DisplayLootMenu(TMap<TSubclassOf<class UItem>, int> Inventory)
+{
+	LootMenuWidget = CreateWidget<ULootMenu>(GetWorld(), LootMenuClass);
+	LootMenuWidget->Inventory = Inventory;
+	LootMenuWidget->AddToViewport();
+}
+
+void AGameHUD::RemoveLootMenu()
+{
+	LootMenuWidget->RemoveFromParent();
+	LootMenuWidget = 0;
+}

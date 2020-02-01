@@ -95,12 +95,14 @@ void ACameraPlayerController::Space()
 	if (!MenuPause)
 	{
 		MenuPause = true;
+		HUD->DisplayLootMenu(Pawn->Inventory);
 		worldSettings->SetTimeDilation(0.0f);
 		Pawn->CustomTimeDilation = 1.0f;
 	}
 	else
 	{
 		MenuPause = false;
+		HUD->RemoveLootMenu();
 		worldSettings->SetTimeDilation(1.0f);
 	}
 }

@@ -28,10 +28,11 @@ protected:
 	UPROPERTY(EditAnywhere)
 	USpringArmComponent* CameraSpringArm;
 	
+
+public:	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<TSubclassOf<class UItem>, int> Inventory;
 
-public:	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UCameraComponent* Camera;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

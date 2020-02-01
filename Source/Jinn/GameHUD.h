@@ -12,6 +12,8 @@
 
 #include "PartyUI.h"
 #include "Creature.h"
+#include "LootMenu.h"
+#include "Item.h"
 #include "GameHUD.generated.h"
 
 /**
@@ -36,6 +38,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UUserWidget* PartyMenuWidget;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	ULootMenu* LootMenuWidget;
+
 	UPROPERTY(BlueprintReadOnly)
 	ACameraPawn* CameraPawn;
 
@@ -46,4 +51,13 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<class UUserWidget> PartyMenuWidgetClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<class ULootMenu> LootMenuClass;
+
+	UFUNCTION(BlueprintCallable)
+	void DisplayLootMenu(TMap<TSubclassOf<class UItem>, int> Inventory);
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveLootMenu();
 };
