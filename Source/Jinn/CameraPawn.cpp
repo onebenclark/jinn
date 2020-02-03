@@ -2,6 +2,8 @@
 
 
 #include "CameraPawn.h"
+#include "Blueprint/UserWidget.h"
+#include "LootDrop.h"
 
 // Sets default values
 ACameraPawn::ACameraPawn()
@@ -10,7 +12,7 @@ ACameraPawn::ACameraPawn()
 	PrimaryActorTick.bCanEverTick = true;
 
 	PartyIndex = 0;
-	CreatureToSelect = 0;
+	ActorToSelect = 0;
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	CameraSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraSpringArm"));
@@ -89,34 +91,52 @@ void ACameraPawn::Tick(float DeltaTime)
 	if (UKismetSystemLibrary::CapsuleTraceSingleByProfile(GetWorld(),
 		traceStart, traceEnd, 100.0f, 0.0f,
 		"Selection", false, actorsToIgnore,
-		EDrawDebugTrace::None, hitResult, true)
-	&&	hitResult.GetActor()
-	&&	hitResult.GetActor()->GetClass()->IsChildOf(ACreature::StaticClass()))
-	{
-		if (CreatureToSelect)
+		EDrawDebugTrace::None, hitResult, true))
+	{ 
+		AActor* actor = hitResult.GetActor();
+		GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Magenta, actor->GetName());
+		UClass* actorClass = actor->GetClass();
+		if (ActorToSelect)
 		{
-			if (!CreatureToSelect->GetName().Equals(hitResult.GetActor()->GetName()))
+			if (!ActorToSelect->GetName().Equals(hitResult.GetActor()->GetName()))
 			{
-				CreatureToSelect = Cast<ACreature>(hitResult.GetActor());
+				ActorToSelect = hitResult.GetActor();
+				if (actorClass->IsChildOf(ACreature::StaticClass()))
+				{
+					SelectionWidgetText = Cast<ACreature>(ActorToSelect)->DisplayName;
+				}
+				else if (actorClass->IsChildOf(ALootDrop::StaticClass()))
+				{	
+					SelectionWidgetText = Cast<ALootDrop>(ActorToSelect)->DisplayText;
+				}
 			}
 		}
 		else
 		{
-			CreatureToSelect = Cast<ACreature>(hitResult.GetActor());
+			ActorToSelect = hitResult.GetActor();
+			if (actorClass->IsChildOf(ACreature::StaticClass()))
+			{
+				SelectionWidgetText = Cast<ACreature>(ActorToSelect)->DisplayName;
+			}
+			else if (actorClass->IsChildOf(ALootDrop::StaticClass()))
+			{
+				SelectionWidgetText = Cast<ALootDrop>(ActorToSelect)->DisplayText;
+			}
 		}
 	}
 	else
 	{
-		CreatureToSelect = 0;
+		ActorToSelect = 0;
 	}
 
-	if (CreatureToSelect)
+	if (ActorToSelect)
 	{
-		if (CreatureToSelect != Party[PartyIndex]->Target)
+		if (ActorToSelect != Party[PartyIndex]->Target)
 		{
+			
 			SelectionWidget->SetVisibility(true);
-			FVector targetToCamera = Camera->GetComponentLocation() - CreatureToSelect->GetActorLocation();
-			SelectionWidget->SetWorldLocationAndRotation(CreatureToSelect->GetActorLocation(), targetToCamera.ToOrientationQuat());
+			FVector targetToCamera = Camera->GetComponentLocation() - ActorToSelect->GetActorLocation();
+			SelectionWidget->SetWorldLocationAndRotation(ActorToSelect->GetActorLocation(), targetToCamera.ToOrientationQuat());
 		}
 	}
 	else

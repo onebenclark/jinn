@@ -9,6 +9,7 @@
 #include "Components/WidgetComponent.h"
 
 #include "Item.h"
+#include "LootDrop.h"
 #include "ActionComponent.h"
 #include "StatsComponent.h"
 #include "CreatureMovementComponent.h"
@@ -92,7 +93,7 @@ public:
 	ACameraPawn* Player;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ACreature* Target;
+	AActor* Target;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float XPWorth;
@@ -125,8 +126,11 @@ public:
 	UItem* HeadEquipment;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<UItem*, int> ItemsToDrop;
+	TMap<TSubclassOf<class UItem>, int> ItemsToDrop;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<class ACreature> DropClass;
+	TSubclassOf<class ALootDrop> DropClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	ALootDrop* Pickup;
 };

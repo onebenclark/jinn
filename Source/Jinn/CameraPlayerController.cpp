@@ -3,6 +3,7 @@
 
 #include "CameraPlayerController.h"
 #include "HealthPotionItem.h"
+#include "CreatureAIController.h"
 
 void ACameraPlayerController::BeginPlay()
 {
@@ -82,8 +83,9 @@ void ACameraPlayerController::CyclePartyMember()
 void ACameraPlayerController::Select()
 {
 	Pawn->Party[Pawn->PartyIndex]->Target = 0;
-	if (!Pawn->CreatureToSelect) return;
-	Pawn->Party[Pawn->PartyIndex]->Target = Cast<ACreature>(Pawn->CreatureToSelect);
+	if (!Pawn->ActorToSelect) return;
+	Pawn->Party[Pawn->PartyIndex]->Target = Pawn->ActorToSelect;
+	
 	
 }
 

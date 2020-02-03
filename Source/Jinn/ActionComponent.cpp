@@ -47,14 +47,14 @@ void UActionComponent::AddAvailableAction(TSubclassOf<class UAction> ActionClass
 	ActionMap.Add(ActionClass, NULL);
 }
 
-void UActionComponent::ExecuteAction(TSubclassOf<class UAction> ActionClass, ACreature* Caller, ACreature* Target)
+void UActionComponent::ExecuteAction(TSubclassOf<class UAction> ActionClass, ACreature* Caller, AActor* Target)
 {
 	if (!ActionMap[ActionClass]) ActionMap.Add(ActionClass, NewObject<UAction>(this, ActionClass.Get()));
 	if (ActionMap[ActionClass]->Cooldown > 0.0f) return;
 	ActionMap[ActionClass]->Execute(Caller, Target);
 }
 
-void UActionComponent::ExecuteLeftFaceButtonAction(ACreature* Caller, ACreature* Target)
+void UActionComponent::ExecuteLeftFaceButtonAction(ACreature* Caller, AActor* Target)
 {
 	if (!LeftFaceButtonAction)
 	{
@@ -65,7 +65,7 @@ void UActionComponent::ExecuteLeftFaceButtonAction(ACreature* Caller, ACreature*
 	ActionMap[LeftFaceButtonAction]->Execute(Caller, Target);
 }
 
-void UActionComponent::ExecuteRightFaceButtonAction(ACreature* Caller, ACreature* Target)
+void UActionComponent::ExecuteRightFaceButtonAction(ACreature* Caller, AActor* Target)
 {
 	if (!RightFaceButtonAction)
 	{
@@ -76,7 +76,7 @@ void UActionComponent::ExecuteRightFaceButtonAction(ACreature* Caller, ACreature
 	ActionMap[RightFaceButtonAction]->Execute(Caller, Target);
 }
 
-void UActionComponent::ExecuteTopFaceButtonAction(ACreature* Caller, ACreature* Target)
+void UActionComponent::ExecuteTopFaceButtonAction(ACreature* Caller, AActor* Target)
 {
 	if (!TopFaceButtonAction)
 	{
@@ -87,7 +87,7 @@ void UActionComponent::ExecuteTopFaceButtonAction(ACreature* Caller, ACreature* 
 	ActionMap[TopFaceButtonAction]->Execute(Caller, Target);
 }
 
-void UActionComponent::ExecuteAttackAction(ACreature* Caller, ACreature* Target)
+void UActionComponent::ExecuteAttackAction(ACreature* Caller, AActor* Target)
 {
 	if (!AttackAction)
 	{

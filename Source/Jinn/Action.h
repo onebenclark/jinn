@@ -70,7 +70,7 @@ public:
 
 	//Execute must be virtual so that pure c++ Actions don't a unimplemented ActionEffects method.
 	UFUNCTION(BlueprintCallable)
-	virtual bool Execute(ACreature* Caller, ACreature* Target);
+	virtual bool Execute(ACreature* Caller, AActor* Target);
 
 	//This Spawn method is here to make spawning easier in blueprints, though it makes easier in general.
 	UFUNCTION(BlueprintCallable)

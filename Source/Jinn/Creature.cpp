@@ -3,6 +3,7 @@
 
 #include "Creature.h"
 #include "CameraPawn.h"
+#include "LootDrop.h"
 #include "CameraPlayerController.h"
 
 // Sets default values
@@ -74,10 +75,16 @@ void ACreature::Tick(float DeltaTime)
 		}
 	}
 
-
-	if (Target != 0 && Target->State == EState::Dead)
+	if (Target != 0)
 	{
-		Target = 0;
+		if (Target->GetClass()->IsChildOf(ACreature::StaticClass()))
+		{
+			
+			if (Cast<ACreature>(Target)->State == EState::Dead)
+			{
+				Target = 0;
+			}
+		}
 	}
 }
 
@@ -127,7 +134,9 @@ float ACreature::TakeDamage(float DamageAmount, struct FDamageEvent const& Damag
 			if (!world) return NULL;
 			FVector loc = GetActorLocation();
 			FRotator rot = GetActorRotation();
-			ACreature* drop = Cast<ACreature>(world->SpawnActor(DropClass, &loc, &rot, params));
+			ALootDrop* drop = Cast<ALootDrop>(world->SpawnActor(DropClass, &loc, &rot, params));
+			drop->DisplayText = DisplayName;
+			drop->Inventory = ItemsToDrop;
 		}
 	}
 	return DamageAmount;

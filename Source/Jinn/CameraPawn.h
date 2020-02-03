@@ -10,6 +10,7 @@
 #include "Projectile.h"
 #include "PartyUI.h"
 #include "Item.h"
+#include "SelectionWidget.h"
 #include "CameraPawn.generated.h"
 
 UCLASS()
@@ -41,7 +42,7 @@ public:
 	int PartyIndex;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ACreature* CreatureToSelect;
+	AActor* ActorToSelect;
 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
@@ -49,6 +50,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	UWidgetComponent* TargetMarkerWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	FString SelectionWidgetText;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector2D MovementInput;

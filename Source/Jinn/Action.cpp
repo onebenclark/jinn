@@ -21,7 +21,7 @@ AActor* UAction::Spawn(FVector location, FRotator rotation)
 	return world->SpawnActor(SpawnedClass, &location, &rotation, params);
 }
 
-bool UAction::Execute(ACreature* Caller, ACreature* Target)
+bool UAction::Execute(ACreature* Caller, AActor* Target)
 {
 	if (!Target || !Caller || Caller->StatsComponent->Will >= Caller->StatsComponent->MaxWill) return true;
 	FVector direction = (Target->GetActorLocation() - Caller->GetActorLocation()).GetSafeNormal2D();
@@ -30,11 +30,12 @@ bool UAction::Execute(ACreature* Caller, ACreature* Target)
 	Cooldown = 1.0f;
 	Caller->StatsComponent->Will += Cost;
 	//Call blueprint implement ActionEffects method.
-	if(Anim == EActionAnim::None) return ActionEffects(Caller, Target);
+
+	CallingCreature = Caller;
+	TargetedCreature = Cast<ACreature>(Target);
+	if(Anim == EActionAnim::None) return ActionEffects(CallingCreature, TargetedCreature);
 	Caller->ActionComponent->ActionAnim = Anim;
 	Caller->ActionComponent->QueuedAction = this;
-	CallingCreature = Caller;
-	TargetedCreature = Target;
 	return true;
 }
 

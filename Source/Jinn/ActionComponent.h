@@ -42,19 +42,19 @@ public:
 	void AddAvailableAction(TSubclassOf<class UAction> ActionClass);
 
 	UFUNCTION(BlueprintCallable)
-	void ExecuteAction(TSubclassOf<class UAction> ActionClass, ACreature* Caller, ACreature* Target);
+	void ExecuteAction(TSubclassOf<class UAction> ActionClass, ACreature* Caller, AActor* Target);
 
 	UFUNCTION(BlueprintCallable)
-	void ExecuteLeftFaceButtonAction(ACreature* Caller, ACreature* Target);
+	void ExecuteLeftFaceButtonAction(ACreature* Caller, AActor* Target);
 
 	UFUNCTION(BlueprintCallable)
-	void ExecuteRightFaceButtonAction(ACreature* Caller, ACreature* Target);
+	void ExecuteRightFaceButtonAction(ACreature* Caller, AActor* Target);
 
 	UFUNCTION(BlueprintCallable)
-	void ExecuteTopFaceButtonAction(ACreature* Caller, ACreature* Target);
+	void ExecuteTopFaceButtonAction(ACreature* Caller, AActor* Target);
 
 	UFUNCTION(BlueprintCallable)
-	void ExecuteAttackAction(ACreature* Caller, ACreature* Target);
+	void ExecuteAttackAction(ACreature* Caller, AActor* Target);
 
 	UFUNCTION(BlueprintCallable)
 	void ChangeAttackAction(TSubclassOf<class UAction> NewAttackAction);
