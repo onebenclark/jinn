@@ -58,13 +58,15 @@ void ACameraPlayerController::MoveRight(float Value)
 
 void ACameraPlayerController::PitchCamera(float Value)
 {
-	if (!MenuPause) Pawn->CameraInput.Y = FMath::Clamp<float>(Value, -1.0f, 1.0f);
+	if (!MenuPause) 
+		Pawn->CameraInput.Y = FMath::Clamp<float>(Value, -1.0f, 1.0f);
 	else Pawn->CameraInput.Y = 0.0f;
 }
 
 void ACameraPlayerController::YawCamera(float Value)
 {
-	if (!MenuPause) Pawn->CameraInput.X = Value;
+	if (!MenuPause) 
+		Pawn->CameraInput.X = Value;
 	else Pawn->CameraInput.X = 0.0f;
 }
 
@@ -125,4 +127,13 @@ void ACameraPlayerController::TopFaceButton()
 {
 	ACreature* ControlledCreature = Pawn->Party[Pawn->PartyIndex];
 	ControlledCreature->ActionComponent->ExecuteTopFaceButtonAction(ControlledCreature, ControlledCreature->Target);
+}
+
+void ACameraPlayerController::DisplayLootMenu(TMap<TSubclassOf<class UItem>, int> Loot)
+{
+	AWorldSettings* worldSettings = GetWorldSettings();
+	MenuPause = true;
+	HUD->DisplayLootMenu(Loot);
+	worldSettings->SetTimeDilation(0.0f);
+	Pawn->CustomTimeDilation = 1.0f;
 }

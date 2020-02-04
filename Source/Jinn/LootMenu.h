@@ -20,4 +20,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<TSubclassOf<class UItem>, int> Inventory;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int MenuIndex;
+
 };

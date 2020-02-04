@@ -44,4 +44,7 @@ public:
 	bool ActionPause;
 	UPROPERTY(BlueprintReadOnly)
 	bool MenuPause;
+
+	UFUNCTION(BlueprintCallable)
+	void DisplayLootMenu(TMap<TSubclassOf<class UItem>, int> Loot);
 };
