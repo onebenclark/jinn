@@ -72,6 +72,7 @@ void ACameraPlayerController::YawCamera(float Value)
 
 void ACameraPlayerController::CyclePartyMember()
 {
+	if (MenuPause) return;
 	Pawn->Party[Pawn->PartyIndex]->Capsule->SetCollisionProfileName(TEXT("Pawn"));
 	Pawn->Party[Pawn->PartyIndex]->IsPlayerControlledMember = false;
 	Pawn->PartyIndex = (Pawn->PartyIndex + 1) % Pawn->Party.Num();
@@ -84,6 +85,7 @@ void ACameraPlayerController::CyclePartyMember()
 
 void ACameraPlayerController::Select()
 {
+	if (MenuPause) return;
 	Pawn->Party[Pawn->PartyIndex]->Target = 0;
 	if (!Pawn->ActorToSelect) return;
 	Pawn->Party[Pawn->PartyIndex]->Target = Pawn->ActorToSelect;
@@ -99,41 +101,58 @@ void ACameraPlayerController::Space()
 	if (!MenuPause)
 	{
 		MenuPause = true;
-		HUD->DisplayLootMenu(Pawn->Inventory);
+		
 		worldSettings->SetTimeDilation(0.0f);
 		Pawn->CustomTimeDilation = 1.0f;
 	}
 	else
 	{
 		MenuPause = false;
-		HUD->RemoveLootMenu();
+		
 		worldSettings->SetTimeDilation(1.0f);
 	}
 }
 
 void ACameraPlayerController::LeftFaceButton()
 {
+	if (MenuPause) return;
 	ACreature* ControlledCreature = Pawn->Party[Pawn->PartyIndex];
 	ControlledCreature->ActionComponent->ExecuteLeftFaceButtonAction(ControlledCreature, ControlledCreature->Target);
 }
 
 void ACameraPlayerController::RightFaceButton()
 {
+	if (MenuPause) return;
 	ACreature* ControlledCreature = Pawn->Party[Pawn->PartyIndex];
 	ControlledCreature->ActionComponent->ExecuteRightFaceButtonAction(ControlledCreature, ControlledCreature->Target);
 }
 
 void ACameraPlayerController::TopFaceButton()
 {
+	if (MenuPause) return;
 	ACreature* ControlledCreature = Pawn->Party[Pawn->PartyIndex];
 	ControlledCreature->ActionComponent->ExecuteTopFaceButtonAction(ControlledCreature, ControlledCreature->Target);
 }
 
-void ACameraPlayerController::DisplayLootMenu(TMap<TSubclassOf<class UItem>, int> Loot)
+void ACameraPlayerController::DisplayLootMenu(ALootDrop* Loot)
 {
 	AWorldSettings* worldSettings = GetWorldSettings();
 	MenuPause = true;
 	HUD->DisplayLootMenu(Loot);
 	worldSettings->SetTimeDilation(0.0f);
 	Pawn->CustomTimeDilation = 1.0f;
+}
+
+void ACameraPlayerController::RemoveLootMenu()
+{
+	AWorldSettings* worldSettings = GetWorldSettings();
+	MenuPause = false;
+	HUD->RemoveLootMenu();
+	worldSettings->SetTimeDilation(1.0f);
+}
+
+void ACameraPlayerController::TakeLoot(TSubclassOf<class UItem> ItemClass, int Quantity)
+{
+	if (Pawn->Inventory.Contains(ItemClass)) Pawn->Inventory[ItemClass] += Quantity;
+	else Pawn->Inventory.Add(ItemClass, Quantity);
 }

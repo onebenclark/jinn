@@ -44,10 +44,10 @@ void AGameHUD::SetPartyIndex(int index)
 	PartyWidget->PartyIndex = index;
 }
 
-void AGameHUD::DisplayLootMenu(TMap<TSubclassOf<class UItem>, int> Inventory)
+void AGameHUD::DisplayLootMenu(ALootDrop* LootDrop)
 {
 	LootMenuWidget = CreateWidget<ULootMenu>(GetWorld(), LootMenuClass);
-	LootMenuWidget->Inventory = Inventory;
+	LootMenuWidget->LootDrop = LootDrop;
 	LootMenuWidget->AddToViewport();
 }
 

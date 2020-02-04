@@ -46,5 +46,11 @@ public:
 	bool MenuPause;
 
 	UFUNCTION(BlueprintCallable)
-	void DisplayLootMenu(TMap<TSubclassOf<class UItem>, int> Loot);
+	void DisplayLootMenu(ALootDrop* Loot);
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveLootMenu();
+
+	UFUNCTION(BlueprintCallable)
+	void TakeLoot(TSubclassOf<class UItem> ItemClass, int Quantity);
 };

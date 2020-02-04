@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 
 #include "Item.h"
+#include "LootDrop.h"
 #include "LootMenu.generated.h"
 
 /**
@@ -18,7 +19,7 @@ public:
 	GENERATED_BODY()
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TMap<TSubclassOf<class UItem>, int> Inventory;
+	ALootDrop* LootDrop;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int MenuIndex;

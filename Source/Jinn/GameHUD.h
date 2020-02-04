@@ -13,6 +13,7 @@
 #include "PartyUI.h"
 #include "Creature.h"
 #include "LootMenu.h"
+#include "LootDrop.h"
 #include "Item.h"
 #include "GameHUD.generated.h"
 
@@ -56,7 +57,7 @@ public:
 	TSubclassOf<class ULootMenu> LootMenuClass;
 
 	UFUNCTION(BlueprintCallable)
-	void DisplayLootMenu(TMap<TSubclassOf<class UItem>, int> Inventory);
+	void DisplayLootMenu(ALootDrop* LootDrop);
 
 	UFUNCTION(BlueprintCallable)
 	void RemoveLootMenu();
