@@ -61,4 +61,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void RemoveLootMenu();
+
+	UFUNCTION(BlueprintCallable)
+	void DisplayPartyMenu();
+
+	UFUNCTION(BlueprintCallable)
+	void RemovePartyMenu();
 };

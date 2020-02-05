@@ -39,6 +39,8 @@ protected:
 	void LeftFaceButton();
 	void RightFaceButton();
 	void TopFaceButton();
+
+	void LeftSpecialButton();
 public:
 	UPROPERTY(BlueprintReadOnly)
 	bool ActionPause;

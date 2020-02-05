@@ -56,3 +56,16 @@ void AGameHUD::RemoveLootMenu()
 	LootMenuWidget->RemoveFromParent();
 	LootMenuWidget = 0;
 }
+
+void AGameHUD::DisplayPartyMenu()
+{
+	PartyMenuWidget = CreateWidget<UUserWidget>(GetWorld(), PartyMenuWidgetClass);
+	PartyMenuWidget->AddToViewport();
+}
+
+void AGameHUD::RemovePartyMenu()
+{
+	PartyMenuWidget->RemoveFromParent();
+	PartyMenuWidget = 0;
+}
+

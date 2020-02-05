@@ -27,6 +27,7 @@ void ACameraPlayerController::SetupInputComponent()
 	InputComponent->BindAction("LeftFaceButton", IE_Pressed, this, &ACameraPlayerController::LeftFaceButton);
 	InputComponent->BindAction("RightFaceButton", IE_Pressed, this, &ACameraPlayerController::RightFaceButton);
 	InputComponent->BindAction("TopFaceButton", IE_Pressed, this, &ACameraPlayerController::TopFaceButton);
+	InputComponent->BindAction("LeftSpecialButton", IE_Pressed, this, &ACameraPlayerController::LeftSpecialButton);
 
 	InputComponent->BindAxis("MoveForward", this, &ACameraPlayerController::MoveForward);
 	InputComponent->BindAxis("MoveRight", this, &ACameraPlayerController::MoveRight);
@@ -132,6 +133,25 @@ void ACameraPlayerController::TopFaceButton()
 	if (MenuPause) return;
 	ACreature* ControlledCreature = Pawn->Party[Pawn->PartyIndex];
 	ControlledCreature->ActionComponent->ExecuteTopFaceButtonAction(ControlledCreature, ControlledCreature->Target);
+}
+
+void ACameraPlayerController::LeftSpecialButton()
+{
+	if (MenuPause)
+	{
+		AWorldSettings* worldSettings = GetWorldSettings();
+		MenuPause = false;
+		HUD->RemovePartyMenu();
+		worldSettings->SetTimeDilation(1.0f);
+	}
+	else
+	{
+		AWorldSettings* worldSettings = GetWorldSettings();
+		MenuPause = true;
+		HUD->DisplayPartyMenu();
+		worldSettings->SetTimeDilation(0.0f);
+		Pawn->CustomTimeDilation = 1.0f;
+	}
 }
 
 void ACameraPlayerController::DisplayLootMenu(ALootDrop* Loot)
