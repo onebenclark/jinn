@@ -53,7 +53,9 @@ void AGameHUD::DisplayLootMenu(ALootDrop* LootDrop)
 
 void AGameHUD::RemoveLootMenu()
 {
+	
 	LootMenuWidget->RemoveFromParent();
+	if (LootMenuWidget->LootDrop->Inventory.Num() == 0) LootMenuWidget->LootDrop->Destroy();
 	LootMenuWidget = 0;
 }
 
