@@ -15,6 +15,9 @@ void ACameraPlayerController::BeginPlay()
 
 	SetTickableWhenPaused(true);
 	ActionPause = false;
+	MenuPause = false;
+	LootMenuDisplayed = false;
+
 }
 
 void ACameraPlayerController::SetupInputComponent()
@@ -161,6 +164,7 @@ void ACameraPlayerController::DisplayLootMenu(ALootDrop* Loot)
 	HUD->DisplayLootMenu(Loot);
 	worldSettings->SetTimeDilation(0.0f);
 	Pawn->CustomTimeDilation = 1.0f;
+	LootMenuDisplayed = true;
 }
 
 void ACameraPlayerController::RemoveLootMenu()
@@ -168,7 +172,10 @@ void ACameraPlayerController::RemoveLootMenu()
 	AWorldSettings* worldSettings = GetWorldSettings();
 	MenuPause = false;
 	HUD->RemoveLootMenu();
+	Pawn->Party[Pawn->PartyIndex]->Target = 0;
 	worldSettings->SetTimeDilation(1.0f);
+	LootMenuDisplayed = false;
+	Pawn->ActorToSelect = 0;
 }
 
 void ACameraPlayerController::TakeLoot(TSubclassOf<class UItem> ItemClass, int Quantity)

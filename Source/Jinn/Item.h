@@ -37,6 +37,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* Mesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int Quantity;
+
 	UFUNCTION(BlueprintCallable)
 	virtual bool Use(ACreature* Target);
 

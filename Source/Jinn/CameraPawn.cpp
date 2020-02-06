@@ -94,7 +94,6 @@ void ACameraPawn::Tick(float DeltaTime)
 		EDrawDebugTrace::None, hitResult, true))
 	{ 
 		AActor* actor = hitResult.GetActor();
-		GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Magenta, actor->GetName());
 		UClass* actorClass = actor->GetClass();
 		if (ActorToSelect)
 		{

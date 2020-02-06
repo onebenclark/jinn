@@ -46,6 +46,8 @@ public:
 	bool ActionPause;
 	UPROPERTY(BlueprintReadOnly)
 	bool MenuPause;
+	UPROPERTY(BlueprintReadOnly)
+	bool LootMenuDisplayed;
 
 	UFUNCTION(BlueprintCallable)
 	void DisplayLootMenu(ALootDrop* Loot);
