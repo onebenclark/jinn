@@ -31,11 +31,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Stamina;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	float MaxHealth;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	float MaxWill;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	float MaxStamina;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -67,8 +67,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void AddExperience(float AddedExperience);
 
-private:
+	UFUNCTION(BlueprintCallable)
 	float GetNextLevelThreshold();
+private:
 	float GetLastLevelThreshold();
 	void LevelUp();
 };

@@ -17,12 +17,7 @@ UStatsComponent::UStatsComponent()
 	Willpower = 5;
 	Intelligence = 5;
 
-	MaxHealth = (Vitality * 5.0f) + (Willpower * 5.0f) + 10.0f;
-	MaxWill = (Willpower * 8.0f) + 10.0f;
-	MaxStamina = (Vitality * 8.0f) + 10.0f;
-	Health = MaxHealth;
-	Will = 0.0f;
-	Stamina = MaxStamina;
+	
 
 	Experience = 0;
 	Level = 1;
@@ -35,7 +30,12 @@ void UStatsComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
+	MaxHealth = (Vitality * 5.0f) + (Willpower * 5.0f) + 10.0f;
+	MaxWill = (Willpower * 8.0f) + 10.0f;
+	MaxStamina = (Vitality * 8.0f) + 10.0f;
+	Health = MaxHealth;
+	Will = 0.0f;
+	Stamina = MaxStamina;
 }
 
 

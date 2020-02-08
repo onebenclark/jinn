@@ -35,7 +35,7 @@ public:
 	EItemType Type;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USkeletalMeshComponent* Mesh;
+	USkeletalMesh* Mesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int Quantity;

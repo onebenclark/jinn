@@ -102,7 +102,7 @@ UPawnMovementComponent* ACreature::GetMovementComponent() const
 
 bool ACreature::IsCloseToPlayer()
 {
-	return FVector::Dist(Player->GetActorLocation(), GetActorLocation()) < 300.0f;
+	return FVector::Dist(Player->GetActorLocation(), GetActorLocation()) < 600.0f;
 }
 
 float ACreature::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser)
