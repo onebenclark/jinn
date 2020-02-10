@@ -111,19 +111,22 @@ public:
 	FString DisplayName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
-	UItem* LeftHandEquipment;
+	TSubclassOf<class UItem> LeftHandEquipment;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
-	UItem* RightHandEquipment;
+	TSubclassOf<class UItem> RightHandEquipment;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
-	UItem* TorsoEquipment;
+	TSubclassOf<class UItem> TorsoEquipment;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
-	UItem* LegsEquipment;
+	TSubclassOf<class UItem> BootsEquipment;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
+	TSubclassOf<class UItem> GlovesEquipment;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
-	UItem* HeadEquipment;
+	TSubclassOf<class UItem> HeadEquipment;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TMap<TSubclassOf<class UItem>, int> ItemsToDrop;

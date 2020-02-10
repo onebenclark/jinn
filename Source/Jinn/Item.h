@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/Texture.h"
 #include "UObject/NoExportTypes.h"
 #include "Item.generated.h"
 
@@ -39,6 +40,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int Quantity;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UTexture* Icon;
 
 	UFUNCTION(BlueprintCallable)
 	virtual bool Use(ACreature* Target);
