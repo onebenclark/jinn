@@ -3,6 +3,7 @@
 
 #include "Action.h"
 #include "Creature.h"
+#include "Styling/SlateBrush.h"
 
 UAction::UAction()
 {

@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Styling/SlateTypes.h"
+#include "Components/ProgressBar.h"
 #include "UObject/NoExportTypes.h"
 #include "Action.generated.h"
 
@@ -57,6 +59,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Cost;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UTexture* Icon;
+
 	//Some Actions will spawn an actor in the world like a projectile or a summoned creature.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<class AActor> SpawnedClass;
@@ -75,6 +80,9 @@ public:
 	//This Spawn method is here to make spawning easier in blueprints, though it makes easier in general.
 	UFUNCTION(BlueprintCallable)
 	AActor* Spawn(FVector location, FRotator rotation);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<class UUserWidget> ActionIconClass;
 
 private:
 	UPROPERTY()
