@@ -3,6 +3,7 @@
 
 #include "Action.h"
 #include "Creature.h"
+#include "CreatureAIController.h"
 #include "Styling/SlateBrush.h"
 
 UAction::UAction()
@@ -34,6 +35,7 @@ bool UAction::Execute(ACreature* Caller, AActor* Target)
 
 	CallingCreature = Caller;
 	TargetedCreature = Cast<ACreature>(Target);
+	CallingCreature->Controller->StopMovement();
 	if(Anim == EActionAnim::None) return ActionEffects(CallingCreature, TargetedCreature);
 	Caller->ActionComponent->ActionAnim = Anim;
 	Caller->ActionComponent->QueuedAction = this;
