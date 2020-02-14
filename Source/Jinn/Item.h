@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/Texture.h"
+#include "Engine/SkeletalMesh.h"
 #include "UObject/NoExportTypes.h"
 #include "Item.generated.h"
 
