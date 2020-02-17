@@ -78,4 +78,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	EActionAnim ActionAnim;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int AvailableAbilityPoints;
+
 };

@@ -12,6 +12,7 @@ UActionComponent::UActionComponent()
 	PrimaryComponentTick.bCanEverTick = true;
 	// ...
 	ActionAnim = EActionAnim::None;
+	AvailableAbilityPoints = 0;
 }
 
 
