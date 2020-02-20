@@ -81,5 +81,14 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int AvailableAbilityPoints;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int LifePoints;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int MindPoints;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int ElementalPoints;
 
 };

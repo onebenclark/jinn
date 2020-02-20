@@ -13,6 +13,9 @@ UActionComponent::UActionComponent()
 	// ...
 	ActionAnim = EActionAnim::None;
 	AvailableAbilityPoints = 0;
+	LifePoints = 0;
+	MindPoints = 0;
+	ElementalPoints = 0;
 }
 
 
