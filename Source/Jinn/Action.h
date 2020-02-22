@@ -26,7 +26,11 @@ enum class EActionAnim : uint8
 	None UMETA(DisplayName = "None"),
 	Attack UMETA(DisplayName = "Attack"),
 	Projectile UMETA(DisplayName = "Projectile"),
-	Missle UMETA(DisplayName = "Missle")
+	Missle UMETA(DisplayName = "Missle"),
+	ElementalBolts UMETA(DisplayName = "ElementalBolts"),
+	FrozenWave UMETA(DisplayName = "FrozenWave"),
+	Mend UMETA(DisplayName = "Mend")
+
 };
 
 UCLASS(Blueprintable, BlueprintType)
