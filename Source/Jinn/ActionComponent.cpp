@@ -113,6 +113,9 @@ void UActionComponent::ChangeAttackAction(TSubclassOf<class UAction> NewAttackAc
 
 void UActionComponent::HandleQueuedAction()
 {
+	if (!QueuedAction) return;
 	QueuedAction->Effects();
-	QueuedAction = 0;
+	
+	if(QueuedAction->IsComplete())QueuedAction = 0;
 }
+

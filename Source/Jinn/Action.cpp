@@ -13,6 +13,7 @@ UAction::UAction()
 	CooldownRate = 0.01f;
 	Cost = 0.0f;
 	Type = EActionType::Targeted;
+	Complete = false;
 }
 
 AActor* UAction::Spawn(FVector location, FRotator rotation)
@@ -32,11 +33,12 @@ bool UAction::Execute(ACreature* Caller, AActor* Target)
 	Cooldown = 1.0f;
 	Caller->StatsComponent->Will += Cost;
 	//Call blueprint implement ActionEffects method.
-
 	CallingCreature = Caller;
 	TargetedCreature = Cast<ACreature>(Target);
 	CallingCreature->Controller->StopMovement();
 	if(Anim == EActionAnim::None) return ActionEffects(CallingCreature, TargetedCreature);
+	Complete = false;
+	
 	Caller->ActionComponent->ActionAnim = Anim;
 	Caller->ActionComponent->QueuedAction = this;
 	return true;
@@ -45,9 +47,15 @@ bool UAction::Execute(ACreature* Caller, AActor* Target)
 bool UAction::Effects()
 {
 	bool success = ActionEffects(CallingCreature, TargetedCreature);
-
-	CallingCreature = 0;
-	TargetedCreature = 0;
-	 
+	if (Complete)
+	{
+		CallingCreature = 0;
+		TargetedCreature = 0;
+	}
 	return success;
+}
+
+bool UAction::IsComplete()
+{
+	return Complete;
 }

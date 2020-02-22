@@ -88,6 +88,12 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<class UUserWidget> ActionIconClass;
 
+	UFUNCTION(BlueprintCallable)
+	bool IsComplete();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool Complete;
+
 private:
 	UPROPERTY()
 	ACreature* CallingCreature;
