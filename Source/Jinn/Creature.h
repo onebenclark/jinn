@@ -66,6 +66,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USkeletalMeshComponent* MeshComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USceneComponent* TargetComponent;
+
 	class UCreatureMovementComponent* MovementComponent;
 	virtual UPawnMovementComponent* GetMovementComponent() const override;
 

@@ -20,6 +20,9 @@ ACreature::ACreature()
 	MeshComponent->SetRelativeLocation(FVector(0.0f, 0.0f, -90.0f));
 	MeshComponent->SetupAttachment(RootComponent);
 
+	TargetComponent = CreateDefaultSubobject<USceneComponent>(L"TargetComponent");
+	TargetComponent->SetupAttachment(RootComponent);
+
 	MovementComponent = CreateDefaultSubobject<UCreatureMovementComponent>(TEXT("CreatureMovementComponent"));
 	MovementComponent->UpdatedComponent = RootComponent;
 
