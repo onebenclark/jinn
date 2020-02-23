@@ -53,6 +53,7 @@ void UActionComponent::AddAvailableAction(TSubclassOf<class UAction> ActionClass
 
 void UActionComponent::ExecuteAction(TSubclassOf<class UAction> ActionClass, ACreature* Caller, AActor* Target)
 {
+	if (ActionMap.Find(ActionClass) == nullptr || ) return;
 	if (!ActionMap[ActionClass]) ActionMap.Add(ActionClass, NewObject<UAction>(this, ActionClass.Get()));
 	if (ActionMap[ActionClass]->Cooldown > 0.0f) return;
 	ActionMap[ActionClass]->Execute(Caller, Target);
@@ -60,7 +61,7 @@ void UActionComponent::ExecuteAction(TSubclassOf<class UAction> ActionClass, ACr
 
 void UActionComponent::ExecuteLeftFaceButtonAction(ACreature* Caller, AActor* Target)
 {
-	if (!LeftFaceButtonAction)
+	if (!LeftFaceButtonAction || QueuedAction)
 	{
 		return;
 	}
@@ -71,7 +72,7 @@ void UActionComponent::ExecuteLeftFaceButtonAction(ACreature* Caller, AActor* Ta
 
 void UActionComponent::ExecuteRightFaceButtonAction(ACreature* Caller, AActor* Target)
 {
-	if (!RightFaceButtonAction)
+	if (!RightFaceButtonAction || QueuedAction)
 	{
 		return;
 	}
@@ -82,7 +83,7 @@ void UActionComponent::ExecuteRightFaceButtonAction(ACreature* Caller, AActor* T
 
 void UActionComponent::ExecuteTopFaceButtonAction(ACreature* Caller, AActor* Target)
 {
-	if (!TopFaceButtonAction)
+	if (!TopFaceButtonAction || QueuedAction)
 	{
 		return;
 	}
