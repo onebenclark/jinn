@@ -19,6 +19,7 @@ UAction::UAction()
 AActor* UAction::Spawn(FVector location, FRotator rotation)
 {
 	FActorSpawnParameters params;
+	params.Owner = CallingCreature;
 	UWorld* world = GetWorld();
 	if (!world) return NULL;
 	return world->SpawnActor(SpawnedClass, &location, &rotation, params);
