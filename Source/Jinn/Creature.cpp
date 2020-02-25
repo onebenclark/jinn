@@ -136,6 +136,7 @@ float ACreature::TakeDamage(float DamageAmount, struct FDamageEvent const& Damag
 			UWorld* world = GetWorld();
 			if (!world) return NULL;
 			FVector loc = GetActorLocation();
+			loc.Z -= 90;
 			FRotator rot = GetActorRotation();
 			ALootDrop* drop = Cast<ALootDrop>(world->SpawnActor(DropClass, &loc, &rot, params));
 			drop->DisplayText = DisplayName;
