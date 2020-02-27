@@ -16,6 +16,8 @@ UActionComponent::UActionComponent()
 	LifePoints = 0;
 	MindPoints = 0;
 	ElementalPoints = 0;
+	NextAction = 0;
+	ActionLock = false;
 }
 
 
@@ -40,6 +42,21 @@ void UActionComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 		if (action.Value->Cooldown > 0.0f) action.Value->Cooldown -= action.Value->CooldownRate;
 		if (action.Value->Cooldown < 0.0f) action.Value->Cooldown = 0;
 	}
+	if (!QueuedAction && ActionAnim == EActionAnim::None && NextAction)
+	{
+		if (!ActionLock)
+		{
+			NextAction->Execute(NextCaller, NextTarget);
+			NextAction = 0;
+			NextCaller = 0;
+			NextTarget = 0;
+		}
+		else
+		{
+			ActionLock = false;
+		}
+	}
+	
 }
 
 void UActionComponent::DecrementActionCooldowns(float DeltaTime)
@@ -61,8 +78,17 @@ void UActionComponent::ExecuteAction(TSubclassOf<class UAction> ActionClass, ACr
 
 void UActionComponent::ExecuteLeftFaceButtonAction(ACreature* Caller, AActor* Target)
 {
-	if (!LeftFaceButtonAction || QueuedAction || ActionAnim != EActionAnim::None)
+	if (!LeftFaceButtonAction)
 	{
+		return;
+	}
+	if (QueuedAction || ActionAnim != EActionAnim::None)
+	{
+		if (!ActionMap[LeftFaceButtonAction]) ActionMap.Add(LeftFaceButtonAction, NewObject<UAction>(this, LeftFaceButtonAction.Get()));
+		if (ActionMap[LeftFaceButtonAction]->Cooldown > 0.0f) return;
+		NextAction = ActionMap[LeftFaceButtonAction];
+		NextCaller = Caller;
+		NextTarget = Target;
 		return;
 	}
 	if (!ActionMap[LeftFaceButtonAction]) ActionMap.Add(LeftFaceButtonAction, NewObject<UAction>(this, LeftFaceButtonAction.Get()));
@@ -72,8 +98,17 @@ void UActionComponent::ExecuteLeftFaceButtonAction(ACreature* Caller, AActor* Ta
 
 void UActionComponent::ExecuteRightFaceButtonAction(ACreature* Caller, AActor* Target)
 {
-	if (!RightFaceButtonAction || QueuedAction || ActionAnim != EActionAnim::None)
+	if (!RightFaceButtonAction)
 	{
+		return;
+	}
+	if (QueuedAction || ActionAnim != EActionAnim::None)
+	{
+		if (!ActionMap[RightFaceButtonAction]) ActionMap.Add(RightFaceButtonAction, NewObject<UAction>(this, RightFaceButtonAction.Get()));
+		if (ActionMap[RightFaceButtonAction]->Cooldown > 0.0f) return;
+		NextAction = ActionMap[RightFaceButtonAction];
+		NextCaller = Caller;
+		NextTarget = Target;
 		return;
 	}
 	if (!ActionMap[RightFaceButtonAction]) ActionMap.Add(RightFaceButtonAction, NewObject<UAction>(this, RightFaceButtonAction.Get()));
@@ -83,8 +118,17 @@ void UActionComponent::ExecuteRightFaceButtonAction(ACreature* Caller, AActor* T
 
 void UActionComponent::ExecuteTopFaceButtonAction(ACreature* Caller, AActor* Target)
 {
-	if (!TopFaceButtonAction || QueuedAction || ActionAnim != EActionAnim::None)
+	if (!TopFaceButtonAction)
 	{
+		return;
+	}
+	if (QueuedAction || ActionAnim != EActionAnim::None)
+	{
+		if (!ActionMap[TopFaceButtonAction]) ActionMap.Add(TopFaceButtonAction, NewObject<UAction>(this, TopFaceButtonAction.Get()));
+		if (ActionMap[TopFaceButtonAction]->Cooldown > 0.0f) return;
+		NextAction = ActionMap[TopFaceButtonAction];
+		NextCaller = Caller;
+		NextTarget = Target;
 		return;
 	}
 	if (!ActionMap[TopFaceButtonAction]) ActionMap.Add(TopFaceButtonAction, NewObject<UAction>(this, TopFaceButtonAction.Get()));

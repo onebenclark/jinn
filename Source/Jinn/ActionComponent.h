@@ -37,6 +37,13 @@ public:
 	TMap<TSubclassOf<class UAction>, UAction*> ActionMap;
 
 	UAction* QueuedAction;
+	UAction* NextAction;
+
+	ACreature* NextCaller;
+	AActor* NextTarget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool ActionLock;
 	
 	UFUNCTION(BlueprintCallable)
 	void AddAvailableAction(TSubclassOf<class UAction> ActionClass);

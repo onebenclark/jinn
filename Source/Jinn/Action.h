@@ -94,9 +94,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool Complete;
 
-private:
 	UPROPERTY()
 	ACreature* CallingCreature;
 	UPROPERTY()
 	ACreature* TargetedCreature;
+
 };

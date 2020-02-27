@@ -40,6 +40,7 @@ bool UAction::Execute(ACreature* Caller, AActor* Target)
 	if(Anim == EActionAnim::None) return ActionEffects(CallingCreature, TargetedCreature);
 	Complete = false;
 	
+	Caller->ActionComponent->ActionLock = true;
 	Caller->ActionComponent->ActionAnim = Anim;
 	Caller->ActionComponent->QueuedAction = this;
 	return true;
