@@ -9,6 +9,7 @@
 #include "Components/WidgetComponent.h"
 
 #include "Item.h"
+#include "StatusEffect.h"
 #include "LootDrop.h"
 #include "ActionComponent.h"
 #include "StatsComponent.h"
@@ -39,7 +40,7 @@ enum class EStatusEffect : uint8
 {
 	None = 0 UMETA(DisplayName = "None"),
 	Immobile = 1 UMETA(DisplayName = "Passive"),
-	PeriodicDamage = 2 UMETA(DisplayName = "Periodic Damage"),
+	PeriodicHealthChange = 2 UMETA(DisplayName = "Periodic Health Change"),
 	Overextended = 4 UMETA(DisplayName = "Overextended"),
 	SpeedMod = 8 UMETA(DisplayName = "SpeedMod"),
 	Inaccurate = 16 UMETA(DisplayName = "Inaccurate"),
@@ -157,4 +158,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ALootDrop* Pickup;
+
+	UPROPERTY(BlueprintReadWrite)
+	TArray<UStatusEffect*> StatusEffects;
 };
