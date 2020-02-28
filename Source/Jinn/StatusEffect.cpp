@@ -13,3 +13,8 @@ void UStatusEffect::Effects(ACreature* AffectedCreature)
 {
 	BPEffects(AffectedCreature);
 }
+
+void UStatusEffect::Remove(ACreature* AffectedCreature)
+{
+
+}

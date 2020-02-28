@@ -159,6 +159,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ALootDrop* Pickup;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<UStatusEffect*> StatusEffects;
 };

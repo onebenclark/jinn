@@ -23,6 +23,9 @@ public:
     UPROPERTY(EditAnywhere)
     float Duration;
 
+    UPROPERTY(EditAnywhere)
+    uint8 EffectTag;
+
     float Time;
 
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
@@ -30,5 +33,8 @@ public:
 
     UFUNCTION(BlueprintCallable)
     virtual void Effects(ACreature* AffectedCreature);
+
+    UFUNCTION(BlueprintCallable)
+    void Remove(ACreature* AffectedCreature);
 
 };

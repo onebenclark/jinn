@@ -89,6 +89,11 @@ void ACreature::Tick(float DeltaTime)
 			}
 		}
 	}
+
+	for (int32 i = 0; i < StatusEffects.Num(); i++)
+	{
+		StatusEffects[i]->Effects(this);
+	}
 }
 
 // Called to bind functionality to input
