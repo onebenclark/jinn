@@ -21,18 +21,23 @@ public:
     UStatusEffect();
 
     UPROPERTY(EditAnywhere)
-    float Duration;
+    uint8 NumberOfCharges;
+
+    //Time Between Effect applications in seconds.
+    UPROPERTY(EditAnywhere)
+    float Interval;
 
     UPROPERTY(EditAnywhere)
     uint8 EffectTag;
 
-    float Time;
+    uint8 EffectTimes;
+    float TimeSinceLastEffect;
 
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
     void BPEffects(ACreature* AffectedCreature);
 
     UFUNCTION(BlueprintCallable)
-    virtual void Effects(ACreature* AffectedCreature);
+    virtual void Effects(ACreature* AffectedCreature, float DeltaTime);
 
     UFUNCTION(BlueprintCallable)
     void Remove(ACreature* AffectedCreature);
