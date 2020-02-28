@@ -35,20 +35,6 @@ enum class EState : uint8
 	Dead UMETA(DisplayName = "Dead")
 };
 
-UENUM(BlueprintType)
-enum class EStatusEffect : uint8
-{
-	None = 0 UMETA(DisplayName = "None"),
-	Immobile = 1 UMETA(DisplayName = "Passive"),
-	PeriodicHealthChange = 2 UMETA(DisplayName = "Periodic Health Change"),
-	Overextended = 4 UMETA(DisplayName = "Overextended"),
-	SpeedMod = 8 UMETA(DisplayName = "SpeedMod"),
-	Inaccurate = 16 UMETA(DisplayName = "Inaccurate"),
-	Panicked = 32 UMETA(DisplayName = "Panicked"),
-	Confused = 64 UMETA(DisplayName = "Confused"),
-	Ensnared = 3 UMETA(DisplayName = "Ensnared"),
-	Stunned = 65 UMETA(DisplayName = "Stunned")
-};
 
 UCLASS()
 class JINN_API ACreature : public APawn
@@ -106,7 +92,7 @@ public:
 	EState State;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	EStatusEffect StatusEffect;
+	uint8 StatusEffectTag;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UBehaviorTree* BehaviorTree;
