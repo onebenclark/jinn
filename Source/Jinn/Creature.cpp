@@ -94,6 +94,14 @@ void ACreature::Tick(float DeltaTime)
 	{
 		StatusEffects[i]->Effects(this, DeltaTime);
 	}
+	if (StatusEffectTag & 1)
+	{
+		MeshComponent->bPauseAnims = true;
+	}
+	else
+	{
+		MeshComponent->bPauseAnims = false;
+	}
 }
 
 // Called to bind functionality to input
