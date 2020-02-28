@@ -41,7 +41,7 @@ void ACameraPlayerController::SetupInputComponent()
 
 void ACameraPlayerController::MoveForward(float Value)
 {
-	if (Pawn->Party[Pawn->PartyIndex]->attack)
+	if (Pawn->Party[Pawn->PartyIndex]->attack || (Pawn->Party[Pawn->PartyIndex]->StatusEffectTag & 1) )
 	{
 		Pawn->MovementInput.X = 0.0f;
 		return;
@@ -52,7 +52,7 @@ void ACameraPlayerController::MoveForward(float Value)
 
 void ACameraPlayerController::MoveRight(float Value)
 {
-	if (Pawn->Party[Pawn->PartyIndex]->attack)
+	if (Pawn->Party[Pawn->PartyIndex]->attack || (Pawn->Party[Pawn->PartyIndex]->StatusEffectTag & 1))
 	{
 		Pawn->MovementInput.Y = 0.0f;
 		return;
