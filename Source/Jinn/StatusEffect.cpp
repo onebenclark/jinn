@@ -10,7 +10,7 @@ UStatusEffect::UStatusEffect()
 	TimeSinceLastEffect = 0.0f;
 	EffectTag = 0;
 	
-	
+	First = true;
 }
 
 void UStatusEffect::Effects(ACreature* AffectedCreature, float DeltaTime)
@@ -24,14 +24,22 @@ void UStatusEffect::Effects(ACreature* AffectedCreature, float DeltaTime)
 		}
 		AffectedCreature->StatusEffectTag |= EffectTag;
 	}
+
+	if (First)
+	{
+		First = false;
+		BPStart(AffectedCreature);
+	}
+
 	TimeSinceLastEffect += DeltaTime;
 	if (TimeSinceLastEffect >= Interval)
 	{
-		BPEffects(AffectedCreature);
+		BPRecurringEffects(AffectedCreature);
 		TimeSinceLastEffect = 0.0f;
 		EffectTimes++;
 		if (EffectTimes == NumberOfCharges)
 		{
+			BPEnd(AffectedCreature);
 			Remove(AffectedCreature);
 			return;
 		}

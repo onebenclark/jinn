@@ -39,6 +39,8 @@ public:
     UPROPERTY(EditAnywhere)
     uint8 NumberOfCharges;
 
+    bool First;
+
     UPROPERTY(EditAnywhere)
     TArray<EStatusEffectTag> EffectTags;
 
@@ -51,10 +53,16 @@ public:
     float TimeSinceLastEffect;
 
     UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-    void BPEffects(ACreature* AffectedCreature);
+    void BPRecurringEffects(ACreature* AffectedCreature);
 
     UFUNCTION(BlueprintCallable)
     virtual void Effects(ACreature* AffectedCreature, float DeltaTime);
+
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void BPStart(ACreature* AffectedCreature);
+
+    UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+    void BPEnd(ACreature* AffectedCreature);
 
     UFUNCTION(BlueprintCallable)
     void Remove(ACreature* AffectedCreature);

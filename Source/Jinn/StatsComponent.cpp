@@ -17,7 +17,7 @@ UStatsComponent::UStatsComponent()
 	Willpower = 5;
 	Intelligence = 5;
 
-	Accuracy = 70;
+	Accuracy = 0.7f;
 	EffectiveAccuracy = Accuracy;
 
 	Experience = 0;

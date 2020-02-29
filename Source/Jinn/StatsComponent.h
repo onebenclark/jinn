@@ -44,10 +44,10 @@ public:
 	int32 Level;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	uint8 Accuracy;
+	float Accuracy;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	uint8 EffectiveAccuracy;
+	float EffectiveAccuracy;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Vitality;
