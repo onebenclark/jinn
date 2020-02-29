@@ -150,4 +150,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	bool StatusEffectBitwiseAnd(uint8 value);
+
+	UFUNCTION(BlueprintCallable)
+	bool StatusEffectCheck(EStatusEffectTag EffectTag);
 };

@@ -179,3 +179,8 @@ bool ACreature::StatusEffectBitwiseAnd(uint8 value)
 {
 	return (StatusEffectTag & value) != 0;
 }
+
+bool ACreature::StatusEffectCheck(EStatusEffectTag EffectTag)
+{
+	return (StatusEffectTag & (uint8)EffectTag) != 0;
+}
