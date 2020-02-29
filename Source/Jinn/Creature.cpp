@@ -110,6 +110,14 @@ void ACreature::Tick(float DeltaTime)
 	{
 		StatsComponent->EffectiveAccuracy = StatsComponent->Accuracy;
 	}
+	if (StatsComponent->Will > StatsComponent->MaxWill)
+	{
+		StatusEffectTag |= 4;
+	}
+	else if (StatusEffectTag & 4)
+	{
+		StatusEffectTag &= ~4;
+	}
 }
 
 // Called to bind functionality to input
