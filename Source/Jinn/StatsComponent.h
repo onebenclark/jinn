@@ -44,6 +44,12 @@ public:
 	int32 Level;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	uint8 Accuracy;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	uint8 EffectiveAccuracy;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Vitality;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 Agility;

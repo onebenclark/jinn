@@ -147,4 +147,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<UStatusEffect*> StatusEffects;
+
+	UFUNCTION(BlueprintCallable)
+	bool StatusEffectBitwiseAnd(uint8 value);
 };

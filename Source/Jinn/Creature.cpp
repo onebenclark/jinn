@@ -106,6 +106,10 @@ void ACreature::Tick(float DeltaTime)
 	{	
 		CustomTimeDilation = 1.0f;
 	}
+	if (!(StatusEffectTag & 16))
+	{
+		StatsComponent->EffectiveAccuracy = StatsComponent->Accuracy;
+	}
 }
 
 // Called to bind functionality to input
@@ -161,4 +165,9 @@ float ACreature::TakeDamage(float DamageAmount, struct FDamageEvent const& Damag
 		}
 	}
 	return DamageAmount;
+}
+
+bool ACreature::StatusEffectBitwiseAnd(uint8 value)
+{
+	return (StatusEffectTag & value) != 0;
 }

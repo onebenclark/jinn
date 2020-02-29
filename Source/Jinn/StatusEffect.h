@@ -36,7 +36,6 @@ class JINN_API UStatusEffect : public UObject
 public:
     UStatusEffect();
 
-
     UPROPERTY(EditAnywhere)
     uint8 NumberOfCharges;
 
