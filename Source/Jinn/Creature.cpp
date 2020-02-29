@@ -102,6 +102,10 @@ void ACreature::Tick(float DeltaTime)
 	{
 		MeshComponent->bPauseAnims = false;
 	}
+	if (!(StatusEffectTag & 8))
+	{	
+		CustomTimeDilation = 1.0f;
+	}
 }
 
 // Called to bind functionality to input
