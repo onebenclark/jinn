@@ -148,6 +148,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<UStatusEffect*> StatusEffects;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UTexture* Icon;
+
 	UFUNCTION(BlueprintCallable)
 	bool StatusEffectBitwiseAnd(uint8 value);
 
