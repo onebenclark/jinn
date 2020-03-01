@@ -31,6 +31,11 @@ ACameraPawn::ACameraPawn()
 
 	TargetMarkerWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("TargetMarkerWidget"));
 	TargetMarkerWidget->SetWidgetSpace(EWidgetSpace::World);
+	
+	ActionAimingWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("ActionAimingWidget"));
+	ActionAimingWidget->SetWidgetSpace(EWidgetSpace::World);
+	ActionAimingWidget->SetupAttachment(RootComponent);
+
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }

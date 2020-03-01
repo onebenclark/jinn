@@ -26,7 +26,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	USpringArmComponent* CameraSpringArm;
 	
 
@@ -52,10 +52,14 @@ public:
 	UWidgetComponent* TargetMarkerWidget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	UWidgetComponent* ActionAimingWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	FString SelectionWidgetText;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector2D MovementInput;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector2D CameraInput;
 
 	UFUNCTION(BlueprintCallable)
