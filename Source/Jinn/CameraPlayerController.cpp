@@ -90,6 +90,11 @@ void ACameraPlayerController::CyclePartyMember()
 void ACameraPlayerController::Select()
 {
 	if (MenuPause) return;
+	if (ActionPause)
+	{
+		ToggleActionAimPause();
+		return;
+	}
 	Pawn->Party[Pawn->PartyIndex]->Target = 0;
 	if (!Pawn->ActorToSelect) return;
 	Pawn->Party[Pawn->PartyIndex]->Target = Pawn->ActorToSelect;
@@ -182,4 +187,26 @@ void ACameraPlayerController::TakeLoot(TSubclassOf<class UItem> ItemClass, int Q
 {
 	if (Pawn->Inventory.Contains(ItemClass)) Pawn->Inventory[ItemClass] += Quantity;
 	else Pawn->Inventory.Add(ItemClass, Quantity);
+}
+
+void ACameraPlayerController::ToggleActionAimPause()
+{
+	AWorldSettings* worldSettings = GetWorldSettings();
+	if (!ActionPause)
+	{
+		ActionPause = true;
+
+		worldSettings->SetTimeDilation(0.0f);
+		Pawn->CustomTimeDilation = 1.0f;
+		Pawn->ActionAimingWidget->SetVisibility(true);
+	}
+	else
+	{
+		ActionPause = false;
+
+		worldSettings->SetTimeDilation(1.0f);
+		Pawn->ActionAimingWidget->SetVisibility(false);
+		Pawn->Party[Pawn->PartyIndex]->ActionComponent->QueuedAction->Direction = Pawn->Camera->GetForwardVector().GetSafeNormal2D();
+		Pawn->Party[Pawn->PartyIndex]->ActionComponent->QueuedAction->Execute(Pawn->Party[Pawn->PartyIndex], Pawn->Party[Pawn->PartyIndex]->Target);
+	}
 }

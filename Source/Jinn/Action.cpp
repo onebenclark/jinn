@@ -4,6 +4,7 @@
 #include "Action.h"
 #include "Creature.h"
 #include "CreatureAIController.h"
+#include "CameraPlayerController.h"
 #include "Styling/SlateBrush.h"
 
 UAction::UAction()
@@ -28,9 +29,26 @@ AActor* UAction::Spawn(FVector location, FRotator rotation)
 bool UAction::Execute(ACreature* Caller, AActor* Target)
 {
 	if (!Target || !Caller || Caller->StatsComponent->Will >= Caller->StatsComponent->MaxWill) return true;
-	FVector direction = (Target->GetActorLocation() - Caller->GetActorLocation()).GetSafeNormal2D();
+	if (Type == EActionType::Directional)
+	{
+		ACameraPlayerController* playerController = Cast<ACameraPlayerController>(GetWorld()->GetFirstPlayerController());
+		if (Direction.IsNearlyZero())
+		{
+			Caller->ActionComponent->QueuedAction = this;
+			playerController->ToggleActionAimPause();
+			return true;
+		}
+		else
+		{
+			
+		}
+	}
+	else
+	{
+		Direction = (Target->GetActorLocation() - Caller->GetActorLocation()).GetSafeNormal2D();
+	}
 	
-	Caller->SetActorRotation(direction.ToOrientationRotator());
+	Caller->SetActorRotation(Direction.ToOrientationRotator());
 	Cooldown = 1.0f;
 	Caller->StatsComponent->Will += Cost;
 	//Call blueprint implement ActionEffects method.

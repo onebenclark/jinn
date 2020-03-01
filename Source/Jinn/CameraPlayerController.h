@@ -57,4 +57,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void TakeLoot(TSubclassOf<class UItem> ItemClass, int Quantity);
+
+	UFUNCTION(BlueprintCallable)
+	void ToggleActionAimPause();
 };

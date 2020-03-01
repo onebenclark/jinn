@@ -99,4 +99,7 @@ public:
 	UPROPERTY()
 	ACreature* TargetedCreature;
 
+	UPROPERTY(BlueprintReadWrite)
+	FVector Direction;
+
 };
