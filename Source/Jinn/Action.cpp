@@ -28,7 +28,11 @@ AActor* UAction::Spawn(FVector location, FRotator rotation)
 
 bool UAction::Execute(ACreature* Caller, AActor* Target)
 {
-	if (!Target || !Caller || Caller->StatsComponent->Will >= Caller->StatsComponent->MaxWill) return true;
+	if ((Type == EActionType::Targeted && !Target) || !Caller || Caller->StatsComponent->Will >= Caller->StatsComponent->MaxWill)
+	{
+		
+		return true;
+	}
 	if (Type == EActionType::Directional)
 	{
 		ACameraPlayerController* playerController = Cast<ACameraPlayerController>(GetWorld()->GetFirstPlayerController());
