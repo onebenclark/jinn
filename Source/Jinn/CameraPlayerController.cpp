@@ -76,7 +76,7 @@ void ACameraPlayerController::YawCamera(float Value)
 
 void ACameraPlayerController::CyclePartyMember()
 {
-	if (MenuPause) return;
+	if (MenuPause || ActionPause) return;
 	Pawn->Party[Pawn->PartyIndex]->Capsule->SetCollisionProfileName(TEXT("Pawn"));
 	Pawn->Party[Pawn->PartyIndex]->IsPlayerControlledMember = false;
 	Pawn->PartyIndex = (Pawn->PartyIndex + 1) % Pawn->Party.Num();
@@ -124,21 +124,21 @@ void ACameraPlayerController::Space()
 
 void ACameraPlayerController::LeftFaceButton()
 {
-	if (MenuPause) return;
+	if (MenuPause || ActionPause) return;
 	ACreature* ControlledCreature = Pawn->Party[Pawn->PartyIndex];
 	ControlledCreature->ActionComponent->ExecuteLeftFaceButtonAction(ControlledCreature, ControlledCreature->Target);
 }
 
 void ACameraPlayerController::RightFaceButton()
 {
-	if (MenuPause) return;
+	if (MenuPause || ActionPause) return;
 	ACreature* ControlledCreature = Pawn->Party[Pawn->PartyIndex];
 	ControlledCreature->ActionComponent->ExecuteRightFaceButtonAction(ControlledCreature, ControlledCreature->Target);
 }
 
 void ACameraPlayerController::TopFaceButton()
 {
-	if (MenuPause) return;
+	if (MenuPause || ActionPause) return;
 	ACreature* ControlledCreature = Pawn->Party[Pawn->PartyIndex];
 	ControlledCreature->ActionComponent->ExecuteTopFaceButtonAction(ControlledCreature, ControlledCreature->Target);
 }

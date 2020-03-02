@@ -65,6 +65,7 @@ bool UAction::Execute(ACreature* Caller, AActor* Target)
 	Caller->ActionComponent->ActionLock = true;
 	Caller->ActionComponent->ActionAnim = Anim;
 	Caller->ActionComponent->QueuedAction = this;
+	Direction = FVector::ZeroVector;
 	return true;
 }
 
