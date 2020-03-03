@@ -5,6 +5,7 @@
 #include "Creature.h"
 #include "CreatureAIController.h"
 #include "CameraPlayerController.h"
+#include "OutputDevice.h"
 #include "Styling/SlateBrush.h"
 
 UAction::UAction()
@@ -51,8 +52,8 @@ bool UAction::Execute(ACreature* Caller, AActor* Target)
 	{
 		Direction = (Target->GetActorLocation() - Caller->GetActorLocation()).GetSafeNormal2D();
 	}
-	
-	Caller->SetActorRotation(Direction.ToOrientationRotator());
+	UE_LOG(LogTemp, Display, L"%s %s", *Caller->GetName(), *Direction.ToString());
+	Caller->SetActorRotation(Direction.ToOrientationQuat());
 	Cooldown = 1.0f;
 	Caller->StatsComponent->Will += Cost;
 	//Call blueprint implement ActionEffects method.
