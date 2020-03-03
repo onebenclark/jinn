@@ -8,6 +8,6 @@
 void UAnimNotify_ExecuteQueuedAction::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	ACreature* Caller = Cast<ACreature>(MeshComp->GetOwner());
-	if (!Caller || (Caller->ActionComponent->QueuedAction->Type == EActionType::Targeted && !Caller->Target)) return;
+	if (!Caller || ((Caller->ActionComponent->QueuedAction && Caller->ActionComponent->QueuedAction->Type == EActionType::Targeted) && !Caller->Target)) return;
 	Caller->ActionComponent->HandleQueuedAction();
 }
