@@ -68,7 +68,7 @@ void ACreature::Tick(float DeltaTime)
 	}
 
 	ACameraPlayerController* controller = Cast<ACameraPlayerController>(GetWorld()->GetFirstPlayerController());
-	if (!controller->ActionPause && !controller->MenuPause)
+	if (!controller->ActionAimingPause && !controller->MenuPause)
 	{
 		FVector velocity = GetVelocity();
 		velocity.Z = 0.0f;

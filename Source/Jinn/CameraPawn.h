@@ -53,6 +53,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	UWidgetComponent* ActionAimingWidget;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	UWidgetComponent* ActionPlacementWidget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	FString SelectionWidgetText;

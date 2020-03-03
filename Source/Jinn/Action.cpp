@@ -48,6 +48,10 @@ bool UAction::Execute(ACreature* Caller, AActor* Target)
 			
 		}
 	}
+	else if (Type == EActionType::Place)
+	{
+
+	}
 	else
 	{
 		Direction = (Target->GetActorLocation() - Caller->GetActorLocation()).GetSafeNormal2D();

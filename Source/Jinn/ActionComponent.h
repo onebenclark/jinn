@@ -69,6 +69,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void HandleQueuedAction();
 
+	UFUNCTION(BlueprintCallable)
+	bool IsActionQueued();
+
 	//These Action Classes are here to map actions to buttons 
 	//by being used as keys in the Action Map.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

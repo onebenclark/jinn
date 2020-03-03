@@ -43,7 +43,9 @@ protected:
 	void LeftSpecialButton();
 public:
 	UPROPERTY(BlueprintReadOnly)
-	bool ActionPause;
+	bool ActionAimingPause;
+	UPROPERTY(BlueprintReadOnly)
+	bool ActionPlacementPause;
 	UPROPERTY(BlueprintReadOnly)
 	bool MenuPause;
 	UPROPERTY(BlueprintReadOnly)
@@ -60,4 +62,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void ToggleActionAimPause();
+
+	UFUNCTION(BlueprintCallable)
+	void ToggleActionPlacementPause();
 };

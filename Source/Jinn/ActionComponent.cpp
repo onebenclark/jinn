@@ -164,3 +164,8 @@ void UActionComponent::HandleQueuedAction()
 	if(QueuedAction->IsComplete())QueuedAction = 0;
 }
 
+bool UActionComponent::IsActionQueued()
+{
+	if (!QueuedAction) return false;
+	return true;
+}
