@@ -11,7 +11,10 @@
 #include "PartyUI.h"
 #include "Item.h"
 #include "SelectionWidget.h"
+#include "ActionPlacementActor.h"
 #include "CameraPawn.generated.h"
+
+class ACameraPlayerController;
 
 UCLASS()
 class JINN_API ACameraPawn : public APawn
@@ -35,6 +38,12 @@ public:
 	TMap<TSubclassOf<class UItem>, int> Inventory;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<class AActionPlacementActor> ActionPlacementActorClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	AActionPlacementActor* ActionPlacementActor;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UCameraComponent* Camera;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<ACreature*> Party;
@@ -45,6 +54,8 @@ public:
 	AActor* ActorToSelect;
 
 
+	ACameraPlayerController* Controller;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	UWidgetComponent* SelectionWidget;
 
@@ -54,8 +65,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	UWidgetComponent* ActionAimingWidget;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
-	UWidgetComponent* ActionPlacementWidget;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	FString SelectionWidgetText;

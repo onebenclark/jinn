@@ -4,6 +4,7 @@
 #include "CameraPawn.h"
 #include "Blueprint/UserWidget.h"
 #include "LootDrop.h"
+#include "CameraPlayerController.h"
 
 // Sets default values
 ACameraPawn::ACameraPawn()
@@ -36,10 +37,6 @@ ACameraPawn::ACameraPawn()
 	ActionAimingWidget->SetWidgetSpace(EWidgetSpace::World);
 	ActionAimingWidget->SetupAttachment(RootComponent);
 	
-	ActionPlacementWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("ActionPlacementWidget"));
-	ActionPlacementWidget->SetWidgetSpace(EWidgetSpace::World);
-	ActionPlacementWidget->SetupAttachment(RootComponent);
-
 
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
@@ -47,6 +44,7 @@ ACameraPawn::ACameraPawn()
 void ACameraPawn::BeginPlay()
 {
 	Super::BeginPlay();
+	Controller = Cast<ACameraPlayerController>(GetWorld()->GetFirstPlayerController());
 	for (int i = 0; i < Party.Num(); i++)
 	{
 		Party[i]->Player = this;
@@ -73,7 +71,10 @@ void ACameraPawn::Tick(float DeltaTime)
 		r.Pitch = FMath::Clamp(r.Pitch + CameraInput.Y, -80.0f, 50.0f);
 		CameraSpringArm->SetWorldRotation(r);
 	}
-
+	float dilation = GetActorTimeDilation();
+	GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Magenta, FString::Printf(L"Time Dilation: %f", dilation));
+	
+	
 	if (!MovementInput.IsZero())
 	{
 		MovementInput = MovementInput.GetSafeNormal() * 100.0f;
@@ -81,12 +82,33 @@ void ACameraPawn::Tick(float DeltaTime)
 		movement2D += Camera->GetRightVector().GetSafeNormal2D() * MovementInput.Y * DeltaTime;
 		FVector newLocation = Party[PartyIndex]->GetActorLocation() + movement2D;
 		//FVector newLocation = GetActorLocation() + movement2D;
-		Party[PartyIndex]->GetMovementComponent()->AddInputVector(movement2D);
+
+		if (Controller->ActionPlacementPause)
+		{
+			if (ActionPlacementActor)
+			{
+				movement2D *= 8.0f;
+				ActionPlacementActor->GetMovementComponent()->AddInputVector(movement2D);
+				SetActorLocation(ActionPlacementActor->GetActorLocation());
+			}
+		}
+		else
+		{
+			Party[PartyIndex]->GetMovementComponent()->AddInputVector(movement2D);
+			SetActorLocation(Party[PartyIndex]->GetActorLocation());
+		}
 
 		
 	}
+	else if (Controller->ActionPlacementPause)
+	{
+		if (ActionPlacementActor)
+		{
+			SetActorLocation(ActionPlacementActor->GetActorLocation());
+		}
+	}
 	
-	SetActorLocation(Party[PartyIndex]->GetActorLocation());
+	
 
 	FVector cameraForwardNormal = Camera->GetForwardVector().GetSafeNormal2D();
 	FVector controlledPartyMemberLocation = Party[PartyIndex]->GetActorLocation();

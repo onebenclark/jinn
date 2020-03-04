@@ -217,19 +217,32 @@ void ACameraPlayerController::ToggleActionAimPause()
 
 void ACameraPlayerController::ToggleActionPlacementPause()
 {
-	AWorldSettings* worldSettings = GetWorldSettings();
 	if (!ActionPlacementPause)
 	{
 		ActionPlacementPause = true;
+		AWorldSettings* worldSettings = GetWorldSettings();
 
 		worldSettings->SetTimeDilation(0.0f);
-		Pawn->CustomTimeDilation = 1.0f;
+		Pawn->CustomTimeDilation = 10000.0f;
+
+		FActorSpawnParameters params;
+		params.Owner = Pawn;
+		UWorld* world = GetWorld();
+		if (!world) return;
+		FVector loc = Pawn->GetActorLocation()+(Pawn->GetActorForwardVector()*300);
+		
+		FRotator rot = Pawn->GetActorRotation();
+		Pawn->ActionPlacementActor = Cast<AActionPlacementActor>(world->SpawnActor(Pawn->ActionPlacementActorClass, &loc, &rot, params));
+		Pawn->ActionPlacementActor->CustomTimeDilation = 10000.0f;
+		
 	}
 	else
 	{
 		ActionPlacementPause = false;
-
+		AWorldSettings* worldSettings = GetWorldSettings();
 		worldSettings->SetTimeDilation(1.0f);
-		Pawn->ActionAimingWidget->SetVisibility(false);
+		Pawn->CustomTimeDilation = 1.0f;
+		if(Pawn->ActionPlacementActor)Pawn->ActionPlacementActor->Destroy();
+		//Pawn->ActionPlacementActor = 0;
 	}
 }

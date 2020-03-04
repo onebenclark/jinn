@@ -2,6 +2,8 @@
 
 
 #include "CreatureMovementComponent.h"
+#include "ActionPlacementActor.h"
+#include "Engine.h"
 
 void UCreatureMovementComponent::BeginPlay()
 {
@@ -19,12 +21,12 @@ void UCreatureMovementComponent::TickComponent(float DeltaTime, enum ELevelTick 
 	}
 
 	FVector movement = ConsumeInputVector();
-	
 	FHitResult hit;
 	SafeMoveUpdatedComponent(movement, UpdatedComponent->GetComponentQuat(), true, hit);
 	
 	if (hit.IsValidBlockingHit())
 	{
+		//if(actor) GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Cyan, L"blocking hit");
 		SlideAlongSurface(movement, 1.0f - hit.Time, hit.Normal, hit);
 	}
 
