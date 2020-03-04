@@ -71,8 +71,6 @@ void ACameraPawn::Tick(float DeltaTime)
 		r.Pitch = FMath::Clamp(r.Pitch + CameraInput.Y, -80.0f, 50.0f);
 		CameraSpringArm->SetWorldRotation(r);
 	}
-	float dilation = GetActorTimeDilation();
-	GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Magenta, FString::Printf(L"Time Dilation: %f", dilation));
 	
 	
 	if (!MovementInput.IsZero())
@@ -91,6 +89,8 @@ void ACameraPawn::Tick(float DeltaTime)
 				ActionPlacementActor->GetMovementComponent()->AddInputVector(movement2D);
 				SetActorLocation(ActionPlacementActor->GetActorLocation());
 			}
+			SelectionWidget->SetVisibility(false);
+			return;
 		}
 		else
 		{
@@ -106,8 +106,9 @@ void ACameraPawn::Tick(float DeltaTime)
 		{
 			SetActorLocation(ActionPlacementActor->GetActorLocation());
 		}
+		SelectionWidget->SetVisibility(false);
+		return;
 	}
-	
 	
 
 	FVector cameraForwardNormal = Camera->GetForwardVector().GetSafeNormal2D();
@@ -117,7 +118,53 @@ void ACameraPawn::Tick(float DeltaTime)
 	TArray<AActor*> actorsToIgnore;
 	actorsToIgnore.Add(Party[PartyIndex]);
 	if (Party[PartyIndex]->Target) actorsToIgnore.Add(Party[PartyIndex]->Target);
-
+	TArray<FHitResult> results;
+	/*
+	if (UKismetSystemLibrary::CapsuleTraceMultiByProfile(GetWorld(),
+		traceStart, traceEnd, 100.0f, 0.0f,
+		"Selection", false, actorsToIgnore,
+		EDrawDebugTrace::ForOneFrame, results, true))
+	{
+		for (int32 i = results.Num()-1; i > -1; i--)
+		{
+			FHitResult result = results[i];
+			AActor* actor = result.GetActor();
+			UClass* actorClass = actor->GetClass();
+			if (ActorToSelect)
+			{
+				if (!ActorToSelect->GetName().Equals(result.GetActor()->GetName()))
+				{
+					ActorToSelect = result.GetActor();
+					if (actorClass->IsChildOf(ACreature::StaticClass()))
+					{
+						SelectionWidgetText = Cast<ACreature>(ActorToSelect)->DisplayName;
+					}
+					else if (actorClass->IsChildOf(ALootDrop::StaticClass()))
+					{
+						SelectionWidgetText = Cast<ALootDrop>(ActorToSelect)->DisplayText;
+					}
+				}
+			}
+			else
+			{
+				ActorToSelect = result.GetActor();
+				if (actorClass->IsChildOf(ACreature::StaticClass()))
+				{
+					SelectionWidgetText = Cast<ACreature>(ActorToSelect)->DisplayName;
+				}
+				else if (actorClass->IsChildOf(ALootDrop::StaticClass()))
+				{
+					SelectionWidgetText = Cast<ALootDrop>(ActorToSelect)->DisplayText;
+				}
+			}
+			break;
+		}
+	}
+	else
+	{
+		ActorToSelect = 0;
+	}
+	/*/
 	FHitResult hitResult;
 	if (UKismetSystemLibrary::CapsuleTraceSingleByProfile(GetWorld(),
 		traceStart, traceEnd, 100.0f, 0.0f,
@@ -158,6 +205,7 @@ void ACameraPawn::Tick(float DeltaTime)
 	{
 		ActorToSelect = 0;
 	}
+	//*/
 
 	if (ActorToSelect)
 	{

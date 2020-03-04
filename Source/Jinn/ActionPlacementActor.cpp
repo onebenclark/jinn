@@ -12,7 +12,7 @@ AActionPlacementActor::AActionPlacementActor()
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	Sphere->InitSphereRadius(50.0f);
-	Sphere->SetCollisionProfileName(L"Pawn");
+	Sphere->SetCollisionProfileName(L"Control");
 	RootComponent = Sphere;
 	
 
