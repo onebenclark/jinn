@@ -96,6 +96,11 @@ void ACameraPlayerController::Select()
 		ToggleActionAimPause();
 		return;
 	}
+	if (ActionPlacementPause)
+	{
+		ToggleActionPlacementPause();
+		return;
+	}
 	Pawn->Party[Pawn->PartyIndex]->Target = 0;
 	if (!Pawn->ActorToSelect) return;
 	Pawn->Party[Pawn->PartyIndex]->Target = Pawn->ActorToSelect;
@@ -217,6 +222,10 @@ void ACameraPlayerController::ToggleActionAimPause()
 
 void ACameraPlayerController::ToggleActionPlacementPause()
 {
+	if (!Pawn->Party[Pawn->PartyIndex]->ActionComponent->QueuedAction)
+	{
+		return;
+	}
 	if (!ActionPlacementPause)
 	{
 		ActionPlacementPause = true;
@@ -230,7 +239,7 @@ void ACameraPlayerController::ToggleActionPlacementPause()
 		UWorld* world = GetWorld();
 		if (!world) return;
 		FVector loc = Pawn->GetActorLocation()+(Pawn->GetActorForwardVector()*300);
-		
+		loc.Z -= 40.0f;
 		FRotator rot = Pawn->GetActorRotation();
 		Pawn->ActionPlacementActor = Cast<AActionPlacementActor>(world->SpawnActor(Pawn->ActionPlacementActorClass, &loc, &rot, params));
 		Pawn->ActionPlacementActor->CustomTimeDilation = 10000.0f;
@@ -242,7 +251,10 @@ void ACameraPlayerController::ToggleActionPlacementPause()
 		AWorldSettings* worldSettings = GetWorldSettings();
 		worldSettings->SetTimeDilation(1.0f);
 		Pawn->CustomTimeDilation = 1.0f;
-		if(Pawn->ActionPlacementActor)Pawn->ActionPlacementActor->Destroy();
-		//Pawn->ActionPlacementActor = 0;
+		//if(Pawn->ActionPlacementActor)Pawn->ActionPlacementActor->Destroy();
+		Pawn->ActionPlacementActor->ActionPlacementWidget->SetVisibility(false);
+		FVector direction = Pawn->ActionPlacementActor->GetActorLocation() - Pawn->Party[Pawn->PartyIndex]->GetActorLocation();
+		Pawn->Party[Pawn->PartyIndex]->ActionComponent->QueuedAction->Direction = direction.GetSafeNormal2D();
+		Pawn->Party[Pawn->PartyIndex]->ActionComponent->QueuedAction->Execute(Pawn->Party[Pawn->PartyIndex], Pawn->ActionPlacementActor);
 	}
 }

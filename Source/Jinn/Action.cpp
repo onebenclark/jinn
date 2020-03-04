@@ -50,7 +50,17 @@ bool UAction::Execute(ACreature* Caller, AActor* Target)
 	}
 	else if (Type == EActionType::Place)
 	{
+		ACameraPlayerController* playerController = Cast<ACameraPlayerController>(GetWorld()->GetFirstPlayerController());
+		if (Direction.IsNearlyZero())
+		{
+			Caller->ActionComponent->QueuedAction = this;
+			playerController->ToggleActionPlacementPause();
+			return true;
+		}
+		else
+		{
 
+		}
 	}
 	else
 	{
@@ -62,9 +72,9 @@ bool UAction::Execute(ACreature* Caller, AActor* Target)
 	Caller->StatsComponent->Will += Cost;
 	//Call blueprint implement ActionEffects method.
 	CallingCreature = Caller;
-	TargetedCreature = Cast<ACreature>(Target);
+	TargetedActor= Target;
 	CallingCreature->Controller->StopMovement();
-	if(Anim == EActionAnim::None) return ActionEffects(CallingCreature, TargetedCreature);
+	if(Anim == EActionAnim::None) return ActionEffects(CallingCreature, Target);
 	Complete = false;
 	
 	Caller->ActionComponent->ActionLock = true;
@@ -76,11 +86,11 @@ bool UAction::Execute(ACreature* Caller, AActor* Target)
 
 bool UAction::Effects()
 {
-	bool success = ActionEffects(CallingCreature, TargetedCreature);
+	bool success = ActionEffects(CallingCreature, TargetedActor);
 	if (Complete)
 	{
 		CallingCreature = 0;
-		TargetedCreature = 0;
+		TargetedActor = 0;
 	}
 	return success;
 }

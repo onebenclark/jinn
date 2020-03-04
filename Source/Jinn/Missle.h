@@ -32,7 +32,7 @@ public:
 	UProjectileMovementComponent* ProjectileMovementComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	ACreature* Target;
+	AActor* Target;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ACreature* Source;

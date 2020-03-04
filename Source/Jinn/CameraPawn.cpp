@@ -109,6 +109,10 @@ void ACameraPawn::Tick(float DeltaTime)
 		SelectionWidget->SetVisibility(false);
 		return;
 	}
+	else
+	{
+		SetActorLocation(Party[PartyIndex]->GetActorLocation());
+	}
 	
 
 	FVector cameraForwardNormal = Camera->GetForwardVector().GetSafeNormal2D();

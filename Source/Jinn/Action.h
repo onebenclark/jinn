@@ -75,7 +75,7 @@ public:
 
 	//Action Effects is here so that Actions can be written in blueprints.
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-	bool ActionEffects(ACreature* Caller, ACreature* Target);
+	bool ActionEffects(ACreature* Caller, AActor* Target);
 
 	//Execute must be virtual so that pure c++ Actions don't a unimplemented ActionEffects method.
 	UFUNCTION(BlueprintCallable)
@@ -97,7 +97,7 @@ public:
 	UPROPERTY()
 	ACreature* CallingCreature;
 	UPROPERTY()
-	ACreature* TargetedCreature;
+	AActor* TargetedActor;
 
 	UPROPERTY(BlueprintReadWrite)
 	FVector Direction;
