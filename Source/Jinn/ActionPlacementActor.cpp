@@ -11,7 +11,7 @@ AActionPlacementActor::AActionPlacementActor()
 
 
 	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
-	Capsule->InitCapsuleSize(10.0f, 60.0f);
+	Capsule->InitCapsuleSize(1.0f, 60.0f);
 	Capsule->SetCollisionProfileName(TEXT("Control"));
 	RootComponent = Capsule;
 	
