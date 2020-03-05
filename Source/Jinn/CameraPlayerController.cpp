@@ -238,8 +238,7 @@ void ACameraPlayerController::ToggleActionPlacementPause()
 		params.Owner = Pawn;
 		UWorld* world = GetWorld();
 		if (!world) return;
-		FVector loc = Pawn->GetActorLocation()+(Pawn->GetActorForwardVector()*300);
-		loc.Z -= 40.0f;
+		FVector loc = Pawn->GetActorLocation();
 		FRotator rot = Pawn->GetActorRotation();
 		Pawn->ActionPlacementActor = Cast<AActionPlacementActor>(world->SpawnActor(Pawn->ActionPlacementActorClass, &loc, &rot, params));
 		Pawn->ActionPlacementActor->CustomTimeDilation = 10000.0f;

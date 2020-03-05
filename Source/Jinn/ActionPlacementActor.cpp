@@ -10,10 +10,11 @@ AActionPlacementActor::AActionPlacementActor()
 	PrimaryActorTick.bCanEverTick = true;
 
 
-	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
-	Sphere->InitSphereRadius(10.0f);
-	Sphere->SetCollisionProfileName(L"Control");
-	RootComponent = Sphere;
+	Capsule = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule"));
+	Capsule->InitCapsuleSize(10.0f, 60.0f);
+	Capsule->SetCollisionProfileName(TEXT("Control"));
+	RootComponent = Capsule;
+	
 	
 
 	MovementComponent = CreateDefaultSubobject<UCreatureMovementComponent>(TEXT("CreatureMovementComponent"));

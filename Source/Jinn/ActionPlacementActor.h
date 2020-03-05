@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "CreatureMovementComponent.h"
-#include "Components/SphereComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/WidgetComponent.h"
 #include "ActionPlacementActor.generated.h"
 
@@ -30,7 +30,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	USphereComponent* Sphere;
+	UCapsuleComponent* Capsule;
 
 	class UCreatureMovementComponent* MovementComponent;
 	virtual UPawnMovementComponent* GetMovementComponent() const override;
