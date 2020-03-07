@@ -2,9 +2,12 @@
 
 #pragma once
 
+#include "DialogResponse.h"
+
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "DialogNode.generated.h"
+
 
 /**
  * 
@@ -14,9 +17,9 @@ class JINN_API UDialogNode : public UObject
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText DialogText;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TMap<FString, UDialogNode*> Responses;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TArray<UDialogResponse*> Responses;
 };
