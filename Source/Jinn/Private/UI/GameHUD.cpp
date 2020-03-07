@@ -23,8 +23,10 @@ void AGameHUD::BeginPlay()
 	PartyWidget->Party = CameraPawn->Party;
 	PartyWidget->PartyIndex = CameraPawn->PartyIndex;
 
-	PartyWidget->AddToViewport();
+	DialogWidget = CreateWidget<UDialogWidget>(GetWorld(), DialogWidgetClass);
 
+	PartyWidget->AddToViewport();
+	DialogWidget->AddToViewport();
 }
 
 void AGameHUD::DrawHUD()

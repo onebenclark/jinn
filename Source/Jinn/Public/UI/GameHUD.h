@@ -10,6 +10,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "GameFramework/HUD.h"
 
+#include "DialogWidget.h"
 #include "PartyUI.h"
 #include "Creature.h"
 #include "LootMenu.h"
@@ -33,14 +34,17 @@ public:
 
 	void SetPartyIndex(int index);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	class UPartyUI* PartyWidget;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	class UUserWidget* PartyMenuWidget;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite)
 	ULootMenu* LootMenuWidget;
+
+	UPROPERTY(BlueprintReadWrite)
+	UDialogWidget* DialogWidget;
 
 	UPROPERTY(BlueprintReadOnly)
 	ACameraPawn* CameraPawn;
@@ -55,6 +59,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<class ULootMenu> LootMenuClass;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UDialogWidget> DialogWidgetClass;
 
 	UFUNCTION(BlueprintCallable)
 	void DisplayLootMenu(ALootDrop* LootDrop);
