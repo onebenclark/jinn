@@ -11,6 +11,19 @@
 #include "CameraPawn.h"
 #include "CameraPlayerController.generated.h"
 
+UENUM()
+enum class EInputPause : uint8
+{
+	PauseFaceButtons = 0b1,
+	PauseLeftStick = 0b10,
+	PauseRightStick = 0b100,
+	PauseCyclePartyMember = 0b1000,
+	PauseSpecialButtons = 0b10000,
+	MenuPause = 0b11111,
+	ActionAimingPause = 0b11011,
+	ActionPlacementPause = 0b11001
+};
+
 /**
  * 
  */
@@ -43,6 +56,9 @@ protected:
 	void LeftSpecialButton();
 public:
 	UPROPERTY(BlueprintReadOnly)
+	uint8 InputPause;
+
+	UPROPERTY(BlueprintReadOnly)
 	bool ActionAimingPause;
 	UPROPERTY(BlueprintReadOnly)
 	bool ActionPlacementPause;
@@ -51,11 +67,20 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	bool LootMenuDisplayed;
 
+	UPROPERTY(BlueprintReadOnly)
+	bool DialogPause;
+
 	UFUNCTION(BlueprintCallable)
 	void DisplayLootMenu(ALootDrop* Loot);
 
 	UFUNCTION(BlueprintCallable)
 	void RemoveLootMenu();
+
+	UFUNCTION(BlueprintCallable)
+	void DisplayDialogWidget(UDialogNode* Dialog);
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveDialogWidget();
 
 	UFUNCTION(BlueprintCallable)
 	void TakeLoot(TSubclassOf<class UItem> ItemClass, int Quantity);

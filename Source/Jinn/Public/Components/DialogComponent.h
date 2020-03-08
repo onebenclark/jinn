@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "DialogNode.h"
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "DialogComponent.generated.h"
@@ -24,5 +25,6 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	UPROPERTY(BlueprintReadWrite)
+	UDialogNode* InitialDialogNode;
 };

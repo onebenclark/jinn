@@ -8,6 +8,7 @@
 #include "BehaviorTree/BehaviorTree.h"
 #include "Components/WidgetComponent.h"
 
+#include "DialogComponent.h"
 #include "Item.h"
 #include "StatusEffect.h"
 #include "LootDrop.h"

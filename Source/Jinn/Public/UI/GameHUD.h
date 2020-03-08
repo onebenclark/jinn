@@ -74,4 +74,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void RemovePartyMenu();
+
+	UFUNCTION(BlueprintCallable)
+	void DisplayDialogWidget(UDialogNode* Dialog);
+
+	UFUNCTION(BlueprintCallable)
+	void RemoveDialogWidget();
 };

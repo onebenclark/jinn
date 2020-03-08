@@ -5,6 +5,7 @@
 #include "CameraPawn.h"
 #include "LootDrop.h"
 #include "CameraPlayerController.h"
+#include "wchar.h"
 
 // Sets default values
 ACreature::ACreature()

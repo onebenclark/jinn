@@ -23,10 +23,8 @@ void AGameHUD::BeginPlay()
 	PartyWidget->Party = CameraPawn->Party;
 	PartyWidget->PartyIndex = CameraPawn->PartyIndex;
 
-	DialogWidget = CreateWidget<UDialogWidget>(GetWorld(), DialogWidgetClass);
 
 	PartyWidget->AddToViewport();
-	DialogWidget->AddToViewport();
 }
 
 void AGameHUD::DrawHUD()
@@ -73,3 +71,15 @@ void AGameHUD::RemovePartyMenu()
 	PartyMenuWidget = 0;
 }
 
+void AGameHUD::DisplayDialogWidget(UDialogNode* Dialog)
+{
+	DialogWidget = CreateWidget<UDialogWidget>(GetWorld(), DialogWidgetClass);
+	DialogWidget->Dialog = Dialog;
+	DialogWidget->AddToViewport();
+}
+
+void AGameHUD::RemoveDialogWidget()
+{
+	DialogWidget->RemoveFromParent();
+	DialogWidget = 0;
+}

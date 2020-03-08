@@ -18,7 +18,7 @@ void ACameraPlayerController::BeginPlay()
 	ActionPlacementPause = false;
 	MenuPause = false;
 	LootMenuDisplayed = false;
-
+	InputPause = 0;
 }
 
 void ACameraPlayerController::SetupInputComponent()
@@ -42,7 +42,7 @@ void ACameraPlayerController::SetupInputComponent()
 
 void ACameraPlayerController::MoveForward(float Value)
 {
-	if (Pawn->Party[Pawn->PartyIndex]->ActionComponent->ActionAnim != EActionAnim::None || (Pawn->Party[Pawn->PartyIndex]->StatusEffectTag & 1) )
+	if (Pawn->Party[Pawn->PartyIndex]->ActionComponent->ActionAnim != EActionAnim::None || (Pawn->Party[Pawn->PartyIndex]->StatusEffectTag & 1) || InputPause & (uint8)EInputPause::PauseLeftStick)
 	{
 		Pawn->MovementInput.X = 0.0f;
 		return;
@@ -53,7 +53,7 @@ void ACameraPlayerController::MoveForward(float Value)
 
 void ACameraPlayerController::MoveRight(float Value)
 {
-	if (Pawn->Party[Pawn->PartyIndex]->ActionComponent->ActionAnim != EActionAnim::None || (Pawn->Party[Pawn->PartyIndex]->StatusEffectTag & 1))
+	if (Pawn->Party[Pawn->PartyIndex]->ActionComponent->ActionAnim != EActionAnim::None || (Pawn->Party[Pawn->PartyIndex]->StatusEffectTag & 1) || InputPause & (uint8)EInputPause::PauseLeftStick)
 	{
 		Pawn->MovementInput.Y = 0.0f;
 		return;
@@ -63,21 +63,23 @@ void ACameraPlayerController::MoveRight(float Value)
 
 void ACameraPlayerController::PitchCamera(float Value)
 {
-	if (!MenuPause) 
+	if (InputPause & (uint8)EInputPause::PauseRightStick)
+		Pawn->CameraInput.Y = 0.0f;
+	else 
 		Pawn->CameraInput.Y = FMath::Clamp<float>(Value, -1.0f, 1.0f);
-	else Pawn->CameraInput.Y = 0.0f;
 }
 
 void ACameraPlayerController::YawCamera(float Value)
 {
-	if (!MenuPause) 
+	if (InputPause & (uint8)EInputPause::PauseRightStick)
+		Pawn->CameraInput.X = 0.0f;
+	else 
 		Pawn->CameraInput.X = Value;
-	else Pawn->CameraInput.X = 0.0f;
 }
 
 void ACameraPlayerController::CyclePartyMember()
 {
-	if (MenuPause || ActionAimingPause) return;
+	if (InputPause & (uint8)EInputPause::PauseCyclePartyMember) return;
 	Pawn->Party[Pawn->PartyIndex]->Capsule->SetCollisionProfileName(TEXT("Pawn"));
 	Pawn->Party[Pawn->PartyIndex]->IsPlayerControlledMember = false;
 	Pawn->PartyIndex = (Pawn->PartyIndex + 1) % Pawn->Party.Num();
@@ -90,19 +92,20 @@ void ACameraPlayerController::CyclePartyMember()
 
 void ACameraPlayerController::Select()
 {
-	if (MenuPause) return;
-	if (ActionAimingPause)
+	if(InputPause == (uint8)EInputPause::ActionAimingPause)
 	{
 		ToggleActionAimPause();
 		return;
 	}
-	if (ActionPlacementPause)
+	if(InputPause == (uint8)EInputPause::ActionPlacementPause != 0)
 	{
 		ToggleActionPlacementPause();
 		return;
 	}
+	if (InputPause & (uint8)EInputPause::PauseFaceButtons) return;
 	Pawn->Party[Pawn->PartyIndex]->Target = 0;
 	if (!Pawn->ActorToSelect) return;
+	UDialogComponent* dialog = Pawn->ActorToSelect->FindComponentByClass<UDialogComponent>();
 	Pawn->Party[Pawn->PartyIndex]->Target = Pawn->ActorToSelect;
 	
 	
@@ -110,61 +113,43 @@ void ACameraPlayerController::Select()
 
 void ACameraPlayerController::Space()
 {
-	ToggleActionPlacementPause();
-	/*
-	AWorldSettings* worldSettings = GetWorldSettings();
-	//Time Dilation is set to 0.0 globally excluding the CameraPawn to create a pause where the
-	//player can input orders and such.
-	if (!MenuPause)
-	{
-		MenuPause = true;
-		
-		worldSettings->SetTimeDilation(0.0f);
-		Pawn->CustomTimeDilation = 1.0f;
-	}
-	else
-	{
-		MenuPause = false;
-		
-		worldSettings->SetTimeDilation(1.0f);
-	}
-	*/
+	
 }
 
 void ACameraPlayerController::LeftFaceButton()
 {
-	if (MenuPause || ActionAimingPause) return;
+	if (InputPause & (uint8)EInputPause::PauseFaceButtons) return;
 	ACreature* ControlledCreature = Pawn->Party[Pawn->PartyIndex];
 	ControlledCreature->ActionComponent->ExecuteLeftFaceButtonAction(ControlledCreature, ControlledCreature->Target);
 }
 
 void ACameraPlayerController::RightFaceButton()
 {
-	if (MenuPause || ActionAimingPause) return;
+	if (InputPause & (uint8)EInputPause::PauseFaceButtons) return;
 	ACreature* ControlledCreature = Pawn->Party[Pawn->PartyIndex];
 	ControlledCreature->ActionComponent->ExecuteRightFaceButtonAction(ControlledCreature, ControlledCreature->Target);
 }
 
 void ACameraPlayerController::TopFaceButton()
 {
-	if (MenuPause || ActionAimingPause) return;
+	if (InputPause & (uint8)EInputPause::PauseFaceButtons) return;
 	ACreature* ControlledCreature = Pawn->Party[Pawn->PartyIndex];
 	ControlledCreature->ActionComponent->ExecuteTopFaceButtonAction(ControlledCreature, ControlledCreature->Target);
 }
 
 void ACameraPlayerController::LeftSpecialButton()
 {
-	if (MenuPause)
+	if (InputPause == (uint8)EInputPause::MenuPause)
 	{
 		AWorldSettings* worldSettings = GetWorldSettings();
-		MenuPause = false;
+		InputPause = 0;
 		HUD->RemovePartyMenu();
 		worldSettings->SetTimeDilation(1.0f);
 	}
 	else
 	{
 		AWorldSettings* worldSettings = GetWorldSettings();
-		MenuPause = true;
+		InputPause = (uint8)EInputPause::MenuPause;
 		HUD->DisplayPartyMenu();
 		worldSettings->SetTimeDilation(0.0f);
 		Pawn->CustomTimeDilation = 1.0f;
@@ -174,7 +159,7 @@ void ACameraPlayerController::LeftSpecialButton()
 void ACameraPlayerController::DisplayLootMenu(ALootDrop* Loot)
 {
 	AWorldSettings* worldSettings = GetWorldSettings();
-	MenuPause = true;
+	InputPause = (uint8)EInputPause::MenuPause;
 	HUD->DisplayLootMenu(Loot);
 	worldSettings->SetTimeDilation(0.0f);
 	Pawn->CustomTimeDilation = 1.0f;
@@ -184,7 +169,7 @@ void ACameraPlayerController::DisplayLootMenu(ALootDrop* Loot)
 void ACameraPlayerController::RemoveLootMenu()
 {
 	AWorldSettings* worldSettings = GetWorldSettings();
-	MenuPause = false;
+	InputPause = 0;
 	HUD->RemoveLootMenu();
 	Pawn->Party[Pawn->PartyIndex]->Target = 0;
 	worldSettings->SetTimeDilation(1.0f);
@@ -201,18 +186,16 @@ void ACameraPlayerController::TakeLoot(TSubclassOf<class UItem> ItemClass, int Q
 void ACameraPlayerController::ToggleActionAimPause()
 {
 	AWorldSettings* worldSettings = GetWorldSettings();
-	if (!ActionAimingPause)
+	if (InputPause != (uint8)EInputPause::ActionAimingPause)
 	{
-		ActionAimingPause = true;
-
+		InputPause = (uint8)EInputPause::ActionAimingPause;
 		worldSettings->SetTimeDilation(0.0f);
 		Pawn->CustomTimeDilation = 1.0f;
 		Pawn->ActionAimingWidget->SetVisibility(true);
 	}
 	else
 	{
-		ActionAimingPause = false;
-
+		InputPause = 0;
 		worldSettings->SetTimeDilation(1.0f);
 		Pawn->ActionAimingWidget->SetVisibility(false);
 		Pawn->Party[Pawn->PartyIndex]->ActionComponent->QueuedAction->Direction = Pawn->Camera->GetForwardVector().GetSafeNormal2D();
@@ -226,9 +209,9 @@ void ACameraPlayerController::ToggleActionPlacementPause()
 	{
 		return;
 	}
-	if (!ActionPlacementPause)
+	if (InputPause != (uint8)EInputPause::ActionPlacementPause)
 	{
-		ActionPlacementPause = true;
+		InputPause = (uint8)EInputPause::ActionPlacementPause;
 		AWorldSettings* worldSettings = GetWorldSettings();
 
 		worldSettings->SetTimeDilation(0.0f);
@@ -246,7 +229,7 @@ void ACameraPlayerController::ToggleActionPlacementPause()
 	}
 	else
 	{
-		ActionPlacementPause = false;
+		InputPause = 0;
 		AWorldSettings* worldSettings = GetWorldSettings();
 		worldSettings->SetTimeDilation(1.0f);
 		Pawn->CustomTimeDilation = 1.0f;
@@ -256,4 +239,16 @@ void ACameraPlayerController::ToggleActionPlacementPause()
 		Pawn->Party[Pawn->PartyIndex]->ActionComponent->QueuedAction->Direction = direction.GetSafeNormal2D();
 		Pawn->Party[Pawn->PartyIndex]->ActionComponent->QueuedAction->Execute(Pawn->Party[Pawn->PartyIndex], Pawn->ActionPlacementActor);
 	}
+}
+
+void ACameraPlayerController::DisplayDialogWidget(UDialogNode* Dialog)
+{
+	HUD->DisplayDialogWidget(Dialog);
+	DialogPause = true;
+}
+
+void ACameraPlayerController::RemoveDialogWidget()
+{
+	HUD->RemoveDialogWidget();
+	DialogPause = false;
 }

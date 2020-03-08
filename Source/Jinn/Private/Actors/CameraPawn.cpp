@@ -81,7 +81,7 @@ void ACameraPawn::Tick(float DeltaTime)
 		FVector newLocation = Party[PartyIndex]->GetActorLocation() + movement2D;
 		//FVector newLocation = GetActorLocation() + movement2D;
 
-		if (Controller->ActionPlacementPause)
+		if (Controller->InputPause == (uint8)EInputPause::ActionPlacementPause)
 		{
 			if (ActionPlacementActor)
 			{
@@ -100,7 +100,7 @@ void ACameraPawn::Tick(float DeltaTime)
 
 		
 	}
-	else if (Controller->ActionPlacementPause)
+	else if (Controller->InputPause == (uint8)EInputPause::ActionPlacementPause)
 	{
 		if (ActionPlacementActor)
 		{
