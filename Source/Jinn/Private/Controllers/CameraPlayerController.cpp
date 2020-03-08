@@ -14,9 +14,7 @@ void ACameraPlayerController::BeginPlay()
 	HUD->CameraPawn = Pawn;
 
 	SetTickableWhenPaused(true);
-	ActionAimingPause = false;
-	ActionPlacementPause = false;
-	MenuPause = false;
+	
 	LootMenuDisplayed = false;
 	InputPause = 0;
 }
@@ -244,11 +242,11 @@ void ACameraPlayerController::ToggleActionPlacementPause()
 void ACameraPlayerController::DisplayDialogWidget(UDialogNode* Dialog)
 {
 	HUD->DisplayDialogWidget(Dialog);
-	DialogPause = true;
+	InputPause = (uint8)EInputPause::DialogPause;
 }
 
 void ACameraPlayerController::RemoveDialogWidget()
 {
 	HUD->RemoveDialogWidget();
-	DialogPause = false;
+	InputPause = 0;
 }

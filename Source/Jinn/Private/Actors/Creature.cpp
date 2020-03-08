@@ -69,15 +69,14 @@ void ACreature::Tick(float DeltaTime)
 	}
 
 	ACameraPlayerController* controller = Cast<ACameraPlayerController>(GetWorld()->GetFirstPlayerController());
-	if (!controller->ActionAimingPause && !controller->MenuPause)
+	
+	FVector velocity = GetVelocity();
+	velocity.Z = 0.0f;
+	if (!velocity.IsZero() && !velocity.IsNearlyZero())
 	{
-		FVector velocity = GetVelocity();
-		velocity.Z = 0.0f;
-		if (!velocity.IsZero() && !velocity.IsNearlyZero())
-		{
-			SetActorRotation(velocity.ToOrientationQuat());
-		}
+		SetActorRotation(velocity.ToOrientationQuat());
 	}
+	
 
 	if (Target != 0)
 	{

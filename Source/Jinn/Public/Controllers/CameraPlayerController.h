@@ -21,7 +21,8 @@ enum class EInputPause : uint8
 	PauseSpecialButtons = 0b10000,
 	MenuPause = 0b11111,
 	ActionAimingPause = 0b11011,
-	ActionPlacementPause = 0b11001
+	ActionPlacementPause = 0b11001,
+	DialogPause = 0b11111
 };
 
 /**
@@ -59,16 +60,8 @@ public:
 	uint8 InputPause;
 
 	UPROPERTY(BlueprintReadOnly)
-	bool ActionAimingPause;
-	UPROPERTY(BlueprintReadOnly)
-	bool ActionPlacementPause;
-	UPROPERTY(BlueprintReadOnly)
-	bool MenuPause;
-	UPROPERTY(BlueprintReadOnly)
 	bool LootMenuDisplayed;
 
-	UPROPERTY(BlueprintReadOnly)
-	bool DialogPause;
 
 	UFUNCTION(BlueprintCallable)
 	void DisplayLootMenu(ALootDrop* Loot);
