@@ -62,6 +62,8 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	bool LootMenuDisplayed;
 
+	UPROPERTY(BlueprintReadOnly)
+	bool DialogWidgetDisplayed;
 
 	UFUNCTION(BlueprintCallable)
 	void DisplayLootMenu(ALootDrop* Loot);

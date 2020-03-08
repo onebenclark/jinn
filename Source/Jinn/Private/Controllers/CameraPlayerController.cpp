@@ -16,6 +16,7 @@ void ACameraPlayerController::BeginPlay()
 	SetTickableWhenPaused(true);
 	
 	LootMenuDisplayed = false;
+	DialogWidgetDisplayed = false;
 	InputPause = 0;
 }
 
@@ -242,11 +243,13 @@ void ACameraPlayerController::ToggleActionPlacementPause()
 void ACameraPlayerController::DisplayDialogWidget(UDialogNode* Dialog)
 {
 	HUD->DisplayDialogWidget(Dialog);
+	DialogWidgetDisplayed = true;
 	InputPause = (uint8)EInputPause::DialogPause;
 }
 
 void ACameraPlayerController::RemoveDialogWidget()
 {
 	HUD->RemoveDialogWidget();
+	DialogWidgetDisplayed = false;
 	InputPause = 0;
 }
